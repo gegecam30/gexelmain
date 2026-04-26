@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gengis Cam Pizarro | Portfolio</title>
+
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      background: #050a0d; 
+      color: #c9e8f0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(0, 188, 212, 0.03) 0%, transparent 50%);
+    }
+
+    #particles { 
+      position: fixed; 
+      inset: 0; 
+      pointer-events: none; 
+      z-index: 0; 
+    }
+    
+    .particle {
+      position: absolute; 
+      width: 3px; 
+      height: 3px; 
+      background: #00e5ff;
+      border-radius: 50%; 
+      opacity: 0; 
+      box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.6);
+      animation: floatUp linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) translateX(0px); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-120px) translateX(40px); opacity: 0; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    .profile-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 24px;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 2px solid rgba(0, 229, 255, 0.8);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+      image-rendering: pixelated;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 14px; 
+      letter-spacing: 4px;
+      color: #00bcd4; 
+      text-transform: uppercase; 
+      margin-bottom: 12px; 
+      text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+    
+    .hero-title {
+      font-family: 'Silkscreen', cursive; 
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing: 1px; 
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #00838f 100%);
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text; 
+      filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3));
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .info-box {
+      background: rgba(0, 229, 255, 0.03); 
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 8px; 
+      padding: 32px; 
+      box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.02), 0 0 15px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .info-box:hover {
+      border-color: rgba(0, 229, 255, 0.5);
+      transform: translateY(-5px);
+    }
+
+    .box-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: 20px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .box-title::before {
+      content: '>';
+      color: #00e5ff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .cv-item {
+      margin-bottom: 16px;
+    }
+
+    .cv-role {
+      font-weight: 600;
+      color: #bdf2fb;
+      font-size: 16px;
+    }
+
+    .cv-detail {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #4dd0e1;
+      margin-top: 4px;
+    }
+
+    .links-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(5, 10, 13, 0.85); 
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 4px;
+      color: #00e5ff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .link-btn:hover {
+      background: rgba(0, 229, 255, 0.1);
+      border-color: rgba(0, 229, 255, 0.8);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* ── Modal Structure ── */
+    .modal-overlay {
+      position: fixed; 
+      inset: 0; 
+      background: rgba(3, 8, 11, 0.9); 
+      z-index: 999;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      opacity: 0; 
+      pointer-events: none; 
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-overlay.active { 
+      opacity: 1; 
+      pointer-events: auto; 
+    }
+    
+    .modal-content {
+      background: #081217; 
+      border: 2px solid #00e5ff; 
+      border-radius: 12px;
+      padding: 40px; 
+      text-align: center; 
+      max-width: 450px;
+      width: 90%;
+      box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); 
+      transform: scale(0.8); 
+      transition: transform 0.4s ease;
+    }
+    
+    .modal-overlay.active .modal-content { 
+      transform: scale(1); 
+    }
+    
+    .modal-title { 
+      font-family: 'Silkscreen', cursive; 
+      font-size: 24px; 
+      color: #fff; 
+      margin-bottom: 15px; 
+      text-shadow: 0 0 10px #00e5ff; 
+    }
+    
+    .modal-text { 
+      color: #bdf2fb; 
+      margin-bottom: 25px; 
+      font-size: 15px; 
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .copy-input-wrapper {
+      display: flex;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    #email-text {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      color: #00e5ff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .copy-btn {
+      background: #00e5ff;
+      color: #050a0d;
+      border: none;
+      padding: 0 20px;
+      font-family: 'Silkscreen', cursive;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover { background: #fff; }
+
+    .close-modal {
+      color: rgba(0, 229, 255, 0.5);
+      background: transparent;
+      border: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center; 
+      padding: 40px 20px; 
+      border-top: 1px solid rgba(0,229,255,0.1);
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 12px; 
+      color: rgba(0,229,255,0.4);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles"></div>
+
+  <div class="modal-overlay" id="email-modal">
+    <div class="modal-content">
+      <h2 class="modal-title">Contact Me</h2>
+      <p class="modal-text">Feel free to reach out for collaborations or inquiries.</p>
+      
+      <div class="copy-input-wrapper">
+        <input type="text" value="gegecam29@gmail.com" id="email-text" readonly>
+        <button class="copy-btn" id="btn-copy">Copy</button>
+      </div>
+
+      <button class="close-modal" onclick="toggleModal()">[ Close Window ]</button>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <header class="profile-section">
+      <div class="avatar-container">
+        <img src="avatar.png" alt="Gengis Cam Pizarro avatar" class="avatar-img">
+      </div>
+      <p class="hero-eyebrow">Gexel</p>
+      <h1 class="hero-title">Gengis Cam Pizarro</h1>
+      
+      <div class="links-container">
+        <div class="link-btn" onclick="toggleModal()">Email Contact</div>
+        <a href="https://github.com/gegecam30" target="_blank" class="link-btn">GitHub</a>
+        <a href="https://myplugins.gexel.fun" target="_blank" class="link-btn">Plugins</a>
+      </div>
+    </header>
+
+    <main class="info-grid">
+      
+      <div class="info-box">
+        <h2 class="box-title">About & Skills</h2>
+        <div class="cv-item">
+          <div class="cv-role">Software Engineering Student</div>
+          <div class="cv-detail">Passionate about building technical mechanics, digital ecosystems, and secure software.</div>
+        </div>
+        <div class="cv-item">
+          <div class="cv-role">Tech Stack</div>
+          <div class="cv-detail">Java, C++, Spigot/Fabric API, Maven, React, Firebase.</div>
+        </div>
+        <div class="cv-item">
+          <div class="cv-role">Aesthetic</div>
+          <div class="cv-detail">16-bit RPG styling, indie pixel art, and cyber-minimalism.</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h2 class="box-title">Experience & Edu</h2>
+        <div class="cv-item">
+          <div class="cv-role">Academic Background</div>
+          <div class="cv-detail">UPC - Universidad Peruana de Ciencias Aplicadas | 3rd Cycle.</div>
+        </div>
+        <div class="cv-item">
+          <div class="cv-role">Minecraft Developer</div>
+          <div class="cv-detail">Creator of FindGame, BoxTop, LancerCore, and the Cobbleverse ecosystem.</div>
+        </div>
+        <div class="cv-item">
+          <div class="cv-role">Web Development</div>
+          <div class="cv-detail">Building high-performance interactive SPAs with retro aesthetics.</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2026 Gengis Cam Pizarro &mdash; All Rights Reserved
+  </footer>
+
+  <script>
+    // 1. Particle System
+    (function () {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const big = Math.random() < 0.25;
+        p.style.cssText = [
+          'left:' + (Math.random() * 100) + '%',
+          'bottom:' + (Math.random() * 20) + '%',
+          'width:' + (big ? 4 : 2) + 'px',
+          'height:' + (big ? 4 : 2) + 'px',
+          'animation-duration:' + (6 + Math.random() * 8) + 's',
+          'animation-delay:' + (Math.random() * 5) + 's',
+        ].join(';');
+        container.appendChild(p);
+      }
+    })();
+
+    // 2. Modal Logic
+    const modal = document.getElementById('email-modal');
+    function toggleModal() {
+      modal.classList.toggle('active');
+    }
+
+    // 3. Copy to Clipboard
+    const copyBtn = document.getElementById('btn-copy');
+    const emailInput = document.getElementById('email-text');
+
+    copyBtn.addEventListener('click', () => {
+      emailInput.select();
+      emailInput.setSelectionRange(0, 99999); // For mobile devices
+      navigator.clipboard.writeText(emailInput.value);
+      
+      copyBtn.textContent = 'Copied!';
+      copyBtn.style.background = '#fff';
+      
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+        copyBtn.style.background = '#00e5ff';
+      }, 2000);
+    });
+
+    // Close modal when clicking outside content
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        toggleModal();
+      }
+    }
+  </script>
+</body>
+</html>
