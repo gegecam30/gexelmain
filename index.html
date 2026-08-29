@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gengis Cam Pizarro | Portfolio</title>
+  <title>gexel</title>
 
-  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="icon" href="ico.ico" type="image/x-icon">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,300&family=Silkscreen&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { 
@@ -17,415 +18,679 @@
       padding: 0; 
     }
 
+    :root {
+      --bg: #030709;
+      --cyan: #00f2ff;
+      --cyan-dim: rgba(0, 242, 255, 0.15);
+      --cyan-glow: rgba(0, 242, 255, 0.4);
+      --magenta: #ff0055;
+      --dark-card: rgba(8, 16, 22, 0.75);
+      --border-card: rgba(0, 242, 255, 0.18);
+      --text-muted: #527883;
+      --text-bright: #d9f7ff;
+    }
+
     body {
-      background: #050a0d; 
-      color: #c9e8f0;
-      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-bright);
+      font-family: 'JetBrains Mono', monospace;
       min-height: 100vh;
-      overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 85% 30%, rgba(0, 188, 212, 0.03) 0%, transparent 50%);
-    }
-
-    #particles { 
-      position: fixed; 
-      inset: 0; 
-      pointer-events: none; 
-      z-index: 0; 
-    }
-    
-    .particle {
-      position: absolute; 
-      width: 3px; 
-      height: 3px; 
-      background: #00e5ff;
-      border-radius: 50%; 
-      opacity: 0; 
-      box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.6);
-      animation: floatUp linear infinite;
-    }
-    
-    @keyframes floatUp {
-      0%   { transform: translateY(100vh) translateX(0px); opacity: 0; }
-      10%  { opacity: 0.8; }
-      90%  { opacity: 0.3; }
-      100% { transform: translateY(-120px) translateX(40px); opacity: 0; }
-    }
-
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 80px 24px;
       display: flex;
-      flex-direction: column;
-      gap: 50px;
-    }
-
-    .profile-section {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-    }
-
-    .avatar-container {
+      justify-content: center;
+      overflow: hidden;
       position: relative;
-      width: 150px;
-      height: 150px;
-      margin-bottom: 24px;
+      user-select: none;
     }
 
-    .avatar-img {
+    /* Ambient Background Elements */
+    #canvas-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .vignette {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, #010406 95%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.6;
+    }
+
+    /* Card Container */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 420px;
+      padding: 44px 32px;
+      background: var(--dark-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 
+        0 0 50px rgba(0, 0, 0, 0.9),
+        0 0 30px rgba(0, 242, 255, 0.05),
+        inset 0 0 25px rgba(0, 242, 255, 0.03);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+      border-color: rgba(0, 242, 255, 0.45);
+      box-shadow: 
+        0 0 60px rgba(0, 0, 0, 0.95),
+        0 0 45px rgba(0, 242, 255, 0.12),
+        inset 0 0 35px rgba(0, 242, 255, 0.06);
+      transform: translateY(-3px);
+    }
+
+    /* Top Corner Tech Decorators */
+    .card-corner {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-color: var(--cyan);
+      opacity: 0.5;
+    }
+    .top-left { top: 10px; left: 10px; border-top: 1.5px solid; border-left: 1.5px solid; }
+    .top-right { top: 10px; right: 10px; border-top: 1.5px solid; border-right: 1.5px solid; }
+    .bottom-left { bottom: 10px; left: 10px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+    .bottom-right { bottom: 10px; right: 10px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+    /* Avatar Container with Radar Ring */
+    .avatar-wrapper {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      margin: 0 auto 28px;
+      cursor: pointer;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px dashed rgba(0, 242, 255, 0.4);
+      animation: rotateRing 20s linear infinite;
+      pointer-events: none;
+    }
+
+    .avatar-ring-pulse {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 242, 255, 0.15);
+      animation: pulseGlow 3s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes rotateRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(0.95); opacity: 0.2; }
+      100% { transform: scale(1.08); opacity: 0.8; }
+    }
+
+    /* ── Glitch Avatar System ── */
+    .glitch-avatar-box {
+      position: relative;
       width: 100%;
       height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 25px var(--cyan-glow);
+      background: #000;
+    }
+
+    .avatar-main {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       object-fit: cover;
-      border-radius: 12px;
-      border: 2px solid rgba(0, 229, 255, 0.8);
-      box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
-      image-rendering: pixelated;
+      display: block;
+      transition: filter 0.3s ease;
     }
 
-    .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace; 
-      font-size: 14px; 
-      letter-spacing: 4px;
-      color: #00bcd4; 
-      text-transform: uppercase; 
-      margin-bottom: 12px; 
-      text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
-    }
-    
-    .hero-title {
-      font-family: 'Silkscreen', cursive; 
-      font-size: clamp(32px, 5vw, 56px);
-      letter-spacing: 1px; 
-      margin-bottom: 15px;
-      background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #00838f 100%);
-      -webkit-background-clip: text; 
-      -webkit-text-fill-color: transparent;
-      background-clip: text; 
-      filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.3));
+    .glitch-layer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background-image: url('anubis12.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
+    /* Periodic idle glitch + Intense hover/active glitch */
+    .glitch-cyan {
+      filter: drop-shadow(-3px 0 var(--cyan)) brightness(1.2) hue-rotate(170deg);
+      mix-blend-mode: screen;
+      animation: glitchAnimCyan 4.5s infinite;
     }
 
-    .info-box {
-      background: rgba(0, 229, 255, 0.03); 
-      border: 1px solid rgba(0, 229, 255, 0.15);
-      border-radius: 8px; 
-      padding: 32px; 
-      box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.02), 0 0 15px rgba(0, 0, 0, 0.5);
-      transition: border-color 0.3s ease, transform 0.3s ease;
+    .glitch-red {
+      filter: drop-shadow(3px 0 var(--magenta)) brightness(1.2) hue-rotate(320deg);
+      mix-blend-mode: screen;
+      animation: glitchAnimRed 4.5s infinite;
     }
 
-    .info-box:hover {
-      border-color: rgba(0, 229, 255, 0.5);
-      transform: translateY(-5px);
+    .glitch-slice {
+      filter: contrast(1.4) brightness(1.1);
+      animation: glitchAnimSlice 4.5s infinite;
     }
 
-    .box-title {
+    .glitch-scanlines {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 242, 255, 0.08) 0px,
+        rgba(0, 242, 255, 0.08) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.7;
+    }
+
+    /* Ambient Idle Glitch Keyframes */
+    @keyframes glitchAnimCyan {
+      0%, 82%, 100% {
+        opacity: 0;
+        transform: translate(0, 0);
+        clip-path: inset(0 0 0 0);
+      }
+      83% {
+        opacity: 0.8;
+        transform: translate(-4px, 1px);
+        clip-path: inset(20% 0 50% 0);
+      }
+      85% {
+        opacity: 0.9;
+        transform: translate(3px, -2px);
+        clip-path: inset(65% 0 10% 0);
+      }
+      87% {
+        opacity: 0;
+        transform: translate(0, 0);
+      }
+      92% {
+        opacity: 0.7;
+        transform: translate(-3px, 2px);
+        clip-path: inset(10% 0 75% 0);
+      }
+      94% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes glitchAnimRed {
+      0%, 82%, 100% {
+        opacity: 0;
+        transform: translate(0, 0);
+        clip-path: inset(0 0 0 0);
+      }
+      83% {
+        opacity: 0.8;
+        transform: translate(4px, -1px);
+        clip-path: inset(45% 0 25% 0);
+      }
+      85% {
+        opacity: 0.9;
+        transform: translate(-3px, 2px);
+        clip-path: inset(5% 0 70% 0);
+      }
+      87% {
+        opacity: 0;
+        transform: translate(0, 0);
+      }
+      92% {
+        opacity: 0.7;
+        transform: translate(3px, -1px);
+        clip-path: inset(60% 0 15% 0);
+      }
+      94% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes glitchAnimSlice {
+      0%, 82%, 100% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+      83% {
+        opacity: 0.9;
+        transform: translateX(-5px);
+        clip-path: inset(30% 0 45% 0);
+      }
+      85% {
+        opacity: 0.9;
+        transform: translateX(5px);
+        clip-path: inset(70% 0 15% 0);
+      }
+      86% {
+        opacity: 0;
+      }
+    }
+
+    /* Hover & Active Glitch (Intense) */
+    .avatar-wrapper:hover .glitch-cyan,
+    .avatar-wrapper.active-glitch .glitch-cyan {
+      animation: glitchIntenseCyan 0.35s infinite steps(2, start);
+    }
+
+    .avatar-wrapper:hover .glitch-red,
+    .avatar-wrapper.active-glitch .glitch-red {
+      animation: glitchIntenseRed 0.35s infinite steps(2, start);
+    }
+
+    .avatar-wrapper:hover .glitch-slice,
+    .avatar-wrapper.active-glitch .glitch-slice {
+      animation: glitchIntenseSlice 0.25s infinite;
+    }
+
+    .avatar-wrapper:hover .avatar-main {
+      filter: contrast(1.2) brightness(1.1);
+    }
+
+    @keyframes glitchIntenseCyan {
+      0% { opacity: 0.9; transform: translate(-5px, 2px); clip-path: inset(10% 0 60% 0); }
+      20% { opacity: 0.7; transform: translate(4px, -2px); clip-path: inset(50% 0 20% 0); }
+      40% { opacity: 1; transform: translate(-3px, -3px); clip-path: inset(30% 0 40% 0); }
+      60% { opacity: 0.8; transform: translate(5px, 1px); clip-path: inset(70% 0 5% 0); }
+      80% { opacity: 0.9; transform: translate(-4px, 3px); clip-path: inset(15% 0 55% 0); }
+      100% { opacity: 0.7; transform: translate(3px, -1px); clip-path: inset(40% 0 35% 0); }
+    }
+
+    @keyframes glitchIntenseRed {
+      0% { opacity: 0.9; transform: translate(5px, -2px); clip-path: inset(40% 0 30% 0); }
+      20% { opacity: 0.8; transform: translate(-4px, 3px); clip-path: inset(15% 0 65% 0); }
+      40% { opacity: 1; transform: translate(4px, 2px); clip-path: inset(65% 0 10% 0); }
+      60% { opacity: 0.7; transform: translate(-5px, -2px); clip-path: inset(25% 0 45% 0); }
+      80% { opacity: 0.9; transform: translate(3px, -3px); clip-path: inset(50% 0 25% 0); }
+      100% { opacity: 0.8; transform: translate(-3px, 2px); clip-path: inset(5% 0 75% 0); }
+    }
+
+    @keyframes glitchIntenseSlice {
+      0% { opacity: 0.9; transform: translate(-6px, 0); clip-path: inset(20% 0 60% 0); }
+      30% { opacity: 0.9; transform: translate(7px, 0); clip-path: inset(60% 0 20% 0); }
+      70% { opacity: 1; transform: translate(-4px, 0); clip-path: inset(40% 0 40% 0); }
+      100% { opacity: 0; transform: translate(0, 0); }
+    }
+
+    /* Identity & Decoder */
+    .alias {
       font-family: 'Silkscreen', cursive;
-      font-size: 20px;
-      color: #ffffff;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: #fff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px var(--cyan-glow);
     }
 
-    .box-title::before {
-      content: '>';
-      color: #00e5ff;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .cv-item {
-      margin-bottom: 16px;
-    }
-
-    .cv-role {
-      font-weight: 600;
-      color: #bdf2fb;
-      font-size: 16px;
-    }
-
-    .cv-detail {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: #4dd0e1;
-      margin-top: 4px;
-    }
-
-    .links-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .link-btn {
+    .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: rgba(5, 10, 13, 0.85); 
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      border-radius: 4px;
-      color: #00e5ff;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .link-btn:hover {
-      background: rgba(0, 229, 255, 0.1);
-      border-color: rgba(0, 229, 255, 0.8);
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-      transform: scale(1.05);
-    }
-
-    /* ── Modal Structure ── */
-    .modal-overlay {
-      position: fixed; 
-      inset: 0; 
-      background: rgba(3, 8, 11, 0.9); 
-      z-index: 999;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      opacity: 0; 
-      pointer-events: none; 
-      transition: opacity 0.4s ease;
-      backdrop-filter: blur(5px);
-    }
-    
-    .modal-overlay.active { 
-      opacity: 1; 
-      pointer-events: auto; 
-    }
-    
-    .modal-content {
-      background: #081217; 
-      border: 2px solid #00e5ff; 
-      border-radius: 12px;
-      padding: 40px; 
-      text-align: center; 
-      max-width: 450px;
-      width: 90%;
-      box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); 
-      transform: scale(0.8); 
-      transition: transform 0.4s ease;
-    }
-    
-    .modal-overlay.active .modal-content { 
-      transform: scale(1); 
-    }
-    
-    .modal-title { 
-      font-family: 'Silkscreen', cursive; 
-      font-size: 24px; 
-      color: #fff; 
-      margin-bottom: 15px; 
-      text-shadow: 0 0 10px #00e5ff; 
-    }
-    
-    .modal-text { 
-      color: #bdf2fb; 
-      margin-bottom: 25px; 
-      font-size: 15px; 
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .copy-input-wrapper {
-      display: flex;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    #email-text {
-      flex: 1;
-      padding: 12px;
-      background: transparent;
-      border: none;
-      color: #00e5ff;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .copy-btn {
-      background: #00e5ff;
-      color: #050a0d;
-      border: none;
-      padding: 0 20px;
-      font-family: 'Silkscreen', cursive;
-      font-size: 12px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .copy-btn:hover { background: #fff; }
-
-    .close-modal {
-      color: rgba(0, 229, 255, 0.5);
-      background: transparent;
-      border: none;
-      font-family: 'JetBrains Mono', monospace;
+      gap: 7px;
+      background: rgba(0, 242, 255, 0.05);
+      border: 1px solid rgba(0, 242, 255, 0.2);
+      padding: 5px 14px;
+      border-radius: 99px;
       font-size: 11px;
-      cursor: pointer;
-      text-decoration: underline;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 22px;
     }
 
-    footer {
-      text-align: center; 
-      padding: 40px 20px; 
-      border-top: 1px solid rgba(0,229,255,0.1);
-      font-family: 'JetBrains Mono', monospace; 
-      font-size: 12px; 
-      color: rgba(0,229,255,0.4);
-      margin-top: 40px;
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: blink 2s infinite ease-in-out;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .divider {
+      height: 1px;
+      width: 60px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin: 0 auto 22px;
+      opacity: 0.4;
+    }
+
+    /* Stealth Message / Scramble */
+    .scramble-box {
+      min-height: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scramble-text {
+      font-size: 13px;
+      color: var(--text-bright);
+      opacity: 0.85;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.6;
+    }
+
+    .sub-code {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Footer minimalist tag */
+    .node-id {
+      margin-top: 26px;
+      font-size: 10px;
+      color: rgba(0, 242, 255, 0.3);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Audio synth ripple click effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 255, 0.4) 0%, transparent 70%);
+      transform: scale(0);
+      animation: rippleAnim 0.6s ease-out;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(3);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="particles"></div>
+  <!-- Neural Starfield Canvas -->
+  <canvas id="canvas-bg"></canvas>
+  <div class="vignette"></div>
+  <div class="scanlines"></div>
 
-  <div class="modal-overlay" id="email-modal">
-    <div class="modal-content">
-      <h2 class="modal-title">Contact Me</h2>
-      <p class="modal-text">Feel free to reach out for collaborations or inquiries.</p>
-      
-      <div class="copy-input-wrapper">
-        <input type="text" value="gegecam29@gmail.com" id="email-text" readonly>
-        <button class="copy-btn" id="btn-copy">Copy</button>
+  <!-- Central Stealth Card -->
+  <main class="card" id="main-card">
+    <div class="card-corner top-left"></div>
+    <div class="card-corner top-right"></div>
+    <div class="card-corner bottom-left"></div>
+    <div class="card-corner bottom-right"></div>
+
+    <div class="avatar-wrapper" id="avatar-btn" title="[ Encrypted Node ]">
+      <div class="avatar-ring-pulse"></div>
+      <div class="avatar-ring"></div>
+      <div class="glitch-avatar-box">
+        <img src="anubis12.jpg" alt="gexel" class="avatar-main" />
+        <div class="glitch-layer glitch-cyan"></div>
+        <div class="glitch-layer glitch-red"></div>
+        <div class="glitch-layer glitch-slice"></div>
+        <div class="glitch-scanlines"></div>
       </div>
-
-      <button class="close-modal" onclick="toggleModal()">[ Close Window ]</button>
     </div>
-  </div>
 
-  <div class="wrapper">
-    <header class="profile-section">
-      <div class="avatar-container">
-        <img src="anubis12.jpg" alt="Gengis Cam Pizarro avatar" class="avatar-img">
-      </div>
-      <p class="hero-eyebrow">Gexel</p>
-      <h1 class="hero-title">Gengis Cam Pizarro</h1>
-      
-      <div class="links-container">
-        <div class="link-btn" onclick="toggleModal()">Email Contact</div>
-        <a href="https://github.com/gegecam30" target="_blank" class="link-btn">GitHub</a>
-        <a href="https://myplugins.gexel.fun" target="_blank" class="link-btn">Plugins</a>
-      </div>
-    </header>
+    <h1 class="alias" id="alias-name">gexel</h1>
 
-    <main class="info-grid">
-      
-      <div class="info-box">
-        <h2 class="box-title">About & Skills</h2>
-        <div class="cv-item">
-          <div class="cv-role">Software Engineering Student</div>
-          <div class="cv-detail">Passionate about building technical mechanics, digital ecosystems, and secure software.</div>
-        </div>
-        <div class="cv-item">
-          <div class="cv-role">Tech Stack</div>
-          <div class="cv-detail">Java, C++, Spigot/Fabric API, Maven, React, Firebase.</div>
-        </div>
-        <div class="cv-item">
-          <div class="cv-role">Aesthetic</div>
-          <div class="cv-detail">16-bit RPG styling, indie pixel art, and cyber-minimalism.</div>
-        </div>
-      </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span id="badge-text">Encrypted // Node</span>
+    </div>
 
-      <div class="info-box">
-        <h2 class="box-title">Experience & Edu</h2>
-        <div class="cv-item">
-          <div class="cv-role">Academic Background</div>
-          <div class="cv-detail">UPC - Universidad Peruana de Ciencias Aplicadas | 3rd Cycle.</div>
-        </div>
-        <div class="cv-item">
-          <div class="cv-role">Minecraft Developer</div>
-          <div class="cv-detail">Creator of FindGame, BoxTop, LancerCore, and the Cobbleverse ecosystem.</div>
-        </div>
-        <div class="cv-item">
-          <div class="cv-role">Web Development</div>
-          <div class="cv-detail">Building high-performance interactive SPAs with retro aesthetics.</div>
-        </div>
-      </div>
+    <div class="divider"></div>
 
-    </main>
-  </div>
+    <div class="scramble-box">
+      <p class="scramble-text" id="quote-line">Nothing to see here.</p>
+      <span class="sub-code" id="hex-code">0x00_VOID // RESTRICTED</span>
+    </div>
 
-  <footer>
-    &copy; 2026 Gengis Cam Pizarro &mdash; All Rights Reserved
-  </footer>
+    <div class="node-id">[ SYSTEM OFFLINE ]</div>
+  </main>
 
   <script>
-    // 1. Particle System
-    (function () {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 40; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const big = Math.random() < 0.25;
-        p.style.cssText = [
-          'left:' + (Math.random() * 100) + '%',
-          'bottom:' + (Math.random() * 20) + '%',
-          'width:' + (big ? 4 : 2) + 'px',
-          'height:' + (big ? 4 : 2) + 'px',
-          'animation-duration:' + (6 + Math.random() * 8) + 's',
-          'animation-delay:' + (Math.random() * 5) + 's',
-        ].join(';');
-        container.appendChild(p);
-      }
-    })();
+    // ── 1. Interactive Neural Grid Canvas Background ──
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const particleCount = 45;
+    let mouse = { x: null, y: null, maxDist: 120 };
 
-    // 2. Modal Logic
-    const modal = document.getElementById('email-modal');
-    function toggleModal() {
-      modal.classList.toggle('active');
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.radius = Math.random() * 1.5 + 0.8;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 242, 255, 0.45)';
+        ctx.fill();
+      }
     }
 
-    // 3. Copy to Clipboard
-    const copyBtn = document.getElementById('btn-copy');
-    const emailInput = document.getElementById('email-text');
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
 
-    copyBtn.addEventListener('click', () => {
-      emailInput.select();
-      emailInput.setSelectionRange(0, 99999); // For mobile devices
-      navigator.clipboard.writeText(emailInput.value);
-      
-      copyBtn.textContent = 'Copied!';
-      copyBtn.style.background = '#fff';
-      
-      setTimeout(() => {
-        copyBtn.textContent = 'Copy';
-        copyBtn.style.background = '#00e5ff';
-      }, 2000);
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(0, 242, 255, ${0.15 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     });
 
-    // Close modal when clicking outside content
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        toggleModal();
+    // ── 2. Text Scramble / Decoder Effect ──
+    class TextScramble {
+      constructor(el) {
+        this.el = el;
+        this.chars = '!<>-_\\/[]{}—=+*^?#________01';
+        this.update = this.update.bind(this);
+      }
+      setText(newText) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        const promise = new Promise((resolve) => this.resolve = resolve);
+        this.queue = [];
+        for (let i = 0; i < length; i++) {
+          const from = oldText[i] || '';
+          const to = newText[i] || '';
+          const start = Math.floor(Math.random() * 20);
+          const end = start + Math.floor(Math.random() * 20);
+          this.queue.push({ from, to, start, end });
+        }
+        cancelAnimationFrame(this.frameRequest);
+        this.frame = 0;
+        this.update();
+        return promise;
+      }
+      update() {
+        let output = '';
+        let complete = 0;
+        for (let i = 0, n = this.queue.length; i < n; i++) {
+          let { from, to, start, end, char } = this.queue[i];
+          if (this.frame >= end) {
+            complete++;
+            output += to;
+          } else if (this.frame >= start) {
+            if (!char || Math.random() < 0.28) {
+              char = this.randomChar();
+              this.queue[i].char = char;
+            }
+            output += `<span style="color: #00f2ff; opacity: 0.8;">${char}</span>`;
+          } else {
+            output += from;
+          }
+        }
+        this.el.innerHTML = output;
+        if (complete === this.queue.length) {
+          this.resolve();
+        } else {
+          this.frameRequest = requestAnimationFrame(this.update);
+          this.frame++;
+        }
+      }
+      randomChar() {
+        return this.chars[Math.floor(Math.random() * this.chars.length)];
       }
     }
+
+    const phrases = [
+      "Nothing to see here.",
+      "Silence is a virtue.",
+      "Just observing.",
+      "Access restricted.",
+      "Lost in the cyberspace.",
+      "Presence without trace."
+    ];
+
+    const quoteEl = document.getElementById('quote-line');
+    const scrambler = new TextScramble(quoteEl);
+    let phraseIndex = 0;
+
+    function nextPhrase() {
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      scrambler.setText(phrases[phraseIndex]);
+    }
+
+    // Interval to cycle subtle mysterious phrases
+    setInterval(nextPhrase, 5000);
+
+    // ── 3. Subtle Cyber Audio Synthetic Click on Interaction ──
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep() {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(950, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(180, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.12);
+    }
+
+    // Avatar interaction (easter egg scramble + intense glitch burst + beep)
+    const avatarBtn = document.getElementById('avatar-btn');
+    const hexEl = document.getElementById('hex-code');
+    const hexCodes = [
+      "0x00_VOID // RESTRICTED",
+      "SIGNAL_LOCKED // 256-BIT",
+      "ANONYMOUS_GATEWAY // OK",
+      "STATUS: STEALTH_MODE"
+    ];
+    let hexIdx = 0;
+
+    avatarBtn.addEventListener('click', (e) => {
+      playBeep();
+      nextPhrase();
+      hexIdx = (hexIdx + 1) % hexCodes.length;
+      hexEl.textContent = hexCodes[hexIdx];
+
+      // Trigger intense glitch burst
+      avatarBtn.classList.add('active-glitch');
+      setTimeout(() => {
+        avatarBtn.classList.remove('active-glitch');
+      }, 600);
+
+      // Ripple animation
+      const card = document.getElementById('main-card');
+      const rect = card.getBoundingClientRect();
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.width = ripple.style.height = '120px';
+      ripple.style.left = (e.clientX - rect.left - 60) + 'px';
+      ripple.style.top = (e.clientY - rect.top - 60) + 'px';
+      card.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
   </script>
 </body>
 </html>
