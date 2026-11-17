@@ -32,19 +32,28 @@ window.GexelAudio = (function () {
 
   music.volume = 0.2;
 
+  const SVG_OFF = '<svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/></svg>';
+  const SVG_ON = '<svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  if (icon) icon.innerHTML = SVG_OFF + SVG_ON;
+  function label() {
+    btn.setAttribute('aria-label', api.playing ? 'Silenciar música' : 'Activar música');
+    btn.setAttribute('aria-pressed', api.playing ? 'true' : 'false');
+  }
+  label();
+
   function toggle(forcePlay) {
     if (api.playing && !forcePlay) {
       music.pause();
-      if (icon) icon.textContent = '🔇';
       if (wrapper) wrapper.classList.remove('is-active');
       api.playing = false;
       api.mutedManually = true;
+      label();
     } else {
       music.play().then(() => {
-        if (icon) icon.textContent = '🔊';
         if (wrapper) wrapper.classList.add('is-active');
         api.playing = true;
         api.mutedManually = false;
+        label();
       }).catch(err => console.log('Audio autostart wait:', err));
     }
   }

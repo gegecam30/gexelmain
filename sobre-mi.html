@@ -51,78 +51,7 @@
       position: relative;
     }
 
-    /* ── Floating Particles ── */
-    #particles { 
-      position: fixed; 
-      inset: 0; 
-      pointer-events: none; 
-      z-index: 0; 
-    }
-    
-    .particle {
-      position: absolute; 
-      width: 3px; 
-      height: 3px; 
-      background: var(--cyan);
-      border-radius: 50%; 
-      opacity: 0; 
-      box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.6);
-      animation: floatUp linear infinite;
-    }
-    
-    @keyframes floatUp {
-      0%   { transform: translateY(100vh) translateX(0px); opacity: 0; }
-      10%  { opacity: 0.8; }
-      90%  { opacity: 0.3; }
-      100% { transform: translateY(-120px) translateX(40px); opacity: 0; }
-    }
-
-    /* ── Audio Control Widget ── */
-    .music-wrapper {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(8, 18, 23, 0.85);
-      border: 1px solid var(--border-cyan);
-      padding: 6px 14px;
-      border-radius: 30px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
-
-    .music-wrapper.is-active {
-      border-color: var(--cyan);
-      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
-    }
-
-    .music-credit {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--cyan-dim);
-      letter-spacing: 0.5px;
-    }
-
-    .music-btn {
-      background: transparent;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s;
-    }
-
-    .music-btn:hover {
-      transform: scale(1.15);
-    }
-
-    /* ── Hero Section (Non-Generic HUD Style) ── */
+      /* ── Hero Section (Non-Generic HUD Style) ── */
     .hero {
       position: relative;
       z-index: 1;
@@ -867,13 +796,13 @@
   <div class="music-wrapper">
     <span class="music-credit">GEXEL // AUDIO 8-BIT</span>
     <button id="music-toggle" class="music-btn" title="Activar/Silenciar Música">
-      <span id="music-icon">🔇</span>
+      <span id="music-icon"></span>
     </button>
   </div>
 
   <nav class="nav-hud">
     <div class="nav-container">
-      <a href="index.html" class="brand-group">
+      <a href="index.html" class="brand-group" aria-label="Gexel, inicio">
         <div class="brand-cube"></div>
         <div class="brand-title">GEXEL<span>.</span></div>
       </a>
@@ -882,7 +811,7 @@
         <li><a href="index.html">Recursos</a></li>
         <li><a href="sobre-mi.html" aria-current="page">Sobre mí</a></li>
         <li><a href="plugins.html">Plugins</a></li>
-        <li><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
+        <li class="nav-ext"><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
       </ul>
 
       <div class="nav-badge-status">
@@ -1095,26 +1024,8 @@
     </div>
   </div>
 
+  <script src="site.js"></script>
   <script>
-    // ── 1. Partículas Flotantes ──
-    (function () {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 40; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        const big = Math.random() < 0.25;
-        p.style.cssText = [
-          'left:' + (Math.random() * 100) + '%',
-          'bottom:' + (Math.random() * 20) + '%',
-          'width:' + (big ? 4 : 2) + 'px',
-          'height:' + (big ? 4 : 2) + 'px',
-          'animation-duration:' + (6 + Math.random() * 8) + 's',
-          'animation-delay:' + (Math.random() * 5) + 's',
-        ].join(';');
-        container.appendChild(p);
-      }
-    })();
-
     // ── 2. Typewriter con Glitch Rúnico 'Galactic' (Estilo Myweb) ──
     const ENCHANT = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const MESSAGES = [
@@ -1191,40 +1102,7 @@
 
     setTimeout(typeNext, 600);
 
-    // ── 3. Audio & Note Block Interactivo ──
-    const music = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-toggle');
-    const musicIcon = document.getElementById('music-icon');
-    const musicWrapper = document.querySelector('.music-wrapper');
-    let isPlaying = false;
-    let userHasInteracted = false;
-    let isMutedManually = false;
-
-    music.volume = 0.2;
-
-    function toggleMusic(forcePlay = false) {
-      if (isPlaying && !forcePlay) {
-        music.pause();
-        musicIcon.textContent = '🔇';
-        musicWrapper.classList.remove('is-active');
-        isPlaying = false;
-        isMutedManually = true;
-      } else {
-        music.play().then(() => {
-          musicIcon.textContent = '🔊';
-          musicWrapper.classList.add('is-active');
-          isPlaying = true;
-          isMutedManually = false;
-        }).catch(err => console.log('Audio autostart wait:', err));
-      }
-    }
-
-    musicBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      userHasInteracted = true;
-      toggleMusic();
-    });
-
+    // ── 3. Note Block interactivo (el audio de fondo vive en site.js) ──
     const noteBlock = document.getElementById('note-block');
     const noteSound = document.getElementById('note-sound');
     noteSound.volume = 0.45;
@@ -1245,10 +1123,7 @@
       noteSound.currentTime = 0;
       noteSound.play().catch(e => console.log("Audio pitch error"));
 
-      if (!isPlaying && !isMutedManually) {
-        userHasInteracted = true;
-        toggleMusic(true);
-      }
+      window.GexelAudio.startIfAllowed();
     });
 
     // ── 4. Modal de Contacto ──

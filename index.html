@@ -4,115 +4,205 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursos — Gexel</title>
+  <meta name="description" content="Programas que uso y recomiendo en mis videos." />
 
   <link rel="icon" href="icon.ico" type="image/x-icon">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site.css">
 
   <style>
-    /* ── Recursos ── */
-    .main-wrapper.resources-section {
+    :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --text-soft: #a9d3dc;   /* ~11:1 sobre #050a0d */
+    }
+
+    /* ── Cabecera de página ── */
+    .page-head {
       position: relative;
       z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 56px 32px 28px;
     }
-    .section-subtitle {
-      color: #92dce8;
-      font-size: 15px;
+    .page-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: clamp(34px, 7vw, 60px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      color: #fff;
+      margin-bottom: 14px;
+      text-wrap: balance;
+    }
+    .page-lede {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(16px, 2.2vw, 19px);
       line-height: 1.6;
-      margin-bottom: 40px;
+      color: var(--text-soft);
+      max-width: 52ch;
     }
-    .resources-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    @media (min-width: 700px)  { .resources-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1020px) { .resources-grid { grid-template-columns: repeat(3, 1fr); } }
 
-    .res-card {
+    /* ── Lista de recursos ── */
+    .resources {
       position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+    .res-filters {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
-      padding: 24px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,229,255,0.2);
-      background: rgba(8, 18, 23, 0.72);
-      backdrop-filter: blur(4px);
-      color: inherit;
-      text-decoration: none;
-      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
     }
-    .res-card:hover, .res-card:focus-visible {
-      transform: translateY(-6px);
-      border-color: rgba(0,229,255,0.8);
-      box-shadow: 0 0 0 1px rgba(0,229,255,0.5), 0 0 30px rgba(0,229,255,0.25), 0 20px 40px rgba(0,0,0,0.6);
-      outline: none;
+    .res-filters[hidden] { display: none; }
+    .chip-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
-    .res-head { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .chip-btn:hover { border-color: rgba(0, 229, 255, 0.6); color: #fff; }
+    .chip-btn[aria-pressed="true"] { background: var(--cyan); color: #050a0d; border-color: var(--cyan); font-weight: 600; }
+
+    .res-list { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+    .res {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px 18px;
+      align-items: start;
+      padding: 20px;
+      background: rgba(8, 18, 23, 0.82);
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      border-radius: 14px;
+      box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.8);
+      transition: transform 0.25s var(--ease-out), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .res:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 229, 255, 0.5);
+      box-shadow: 0 18px 34px -16px rgba(0, 0, 0, 0.9);
+    }
+    .res[hidden] { display: none; }
     .res-icon {
-      flex-shrink: 0;
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      border: 1px solid rgba(0,229,255,0.35);
-      background: #050a0d;
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
       object-fit: cover;
+      background: #050a0d;
+      transition: transform 0.4s var(--ease-out);
     }
+    .res:hover .res-icon { transform: scale(1.04); }
+    .res-icon.is-fallback {
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Silkscreen', cursive; font-size: 30px; color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+    }
+    .res-body { min-width: 0; }
     .res-name {
       font-family: 'Silkscreen', cursive;
-      font-size: 22px;
-      color: #ffffff;
+      font-size: 24px;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 6px;
       overflow-wrap: anywhere;
     }
-    .res-desc { font-size: 14px; color: #92dce8; line-height: 1.6; flex: 1; }
-    .res-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .res-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-soft);
+      max-width: 60ch;
+      margin-bottom: 12px;
+    }
+    .res-tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
     .res-tag {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      background: rgba(0,229,255,0.12);
-      border: 1px solid rgba(0,229,255,0.4);
-      color: #00e5ff;
-      padding: 4px 10px;
-      border-radius: 4px;
+      font-size: 12px;
+      color: var(--cyan);
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      padding: 3px 10px;
+      border-radius: 6px;
     }
-    .res-cta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      color: #00e5ff;
-      text-shadow: 0 0 8px rgba(0,229,255,0.5);
+    .res-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 10px;
     }
-    .res-card:hover .res-cta { color: #ffffff; }
-    .res-card.is-soon {
-      border: 2px dashed rgba(0,229,255,0.25);
-      background: rgba(8, 18, 23, 0.35);
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 200px;
-      text-align: center;
-      font-family: 'Silkscreen', cursive;
-      font-size: 18px;
-      color: rgba(0,229,255,0.5);
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.18s var(--ease-out), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .res-card.is-soon:hover { transform: none; box-shadow: none; border-color: rgba(0,229,255,0.25); }
+    .btn-primary {
+      flex: 1;
+      background: var(--cyan);
+      color: #050a0d;
+      box-shadow: 0 8px 18px -8px rgba(0, 229, 255, 0.55);
+    }
+    .btn-primary:hover { background: #5cf0ff; transform: translateY(-1px); box-shadow: 0 12px 22px -8px rgba(0, 229, 255, 0.6); }
+    .btn-primary:active { transform: translateY(1px) scale(0.98); box-shadow: none; }
+    .btn-quiet {
+      color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      background: transparent;
+    }
+    .btn-quiet:hover { background: rgba(0, 229, 255, 0.1); border-color: rgba(0, 229, 255, 0.6); }
+    .btn-quiet:active { transform: scale(0.98); }
 
-    .hero.hero-compact { padding: 56px 24px 40px; }
-    .hero.hero-compact .hero-byline { margin-bottom: 0; }
-    .section-subtitle { margin-bottom: 40px; }
-    .res-icon { object-fit: cover; }
-    @media (max-width: 640px) {
-      .main-wrapper { padding: 0 20px 80px; }
-      .hero.hero-compact { padding: 40px 20px 32px; }
+    .res-soon {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(0, 229, 255, 0.2);
+      font-size: 15px;
+      color: #8fb6c0;
     }
+
+    @media (min-width: 720px) {
+      .res {
+        grid-template-columns: 96px 1fr auto;
+        align-items: center;
+        padding: 24px 28px;
+        gap: 24px;
+      }
+      .res-icon { width: 96px; height: 96px; border-radius: 22px; }
+      .res-icon.is-fallback { font-size: 40px; }
+      .res-actions { grid-column: auto; flex-direction: column; min-width: 170px; }
+      .btn-primary { flex: none; }
+    }
+    @media (max-width: 640px) {
+      .page-head { padding: 32px 20px 20px; }
+      .resources { padding: 0 20px 48px; }
+    }
+
+    /* ── Entrada (una sola, al cargar) ── */
+    @keyframes rise {
+      from { opacity: 0.35; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .page-head > * { animation: rise 0.7s var(--ease-out) both; }
+    .page-head > .page-lede { animation-delay: 0.08s; }
+    .res, .res-soon { animation: rise 0.7s var(--ease-out) both; animation-delay: calc(0.16s + var(--i, 0) * 0.08s); }
   </style>
 </head>
 <body>
@@ -124,14 +214,14 @@
 
   <div class="music-wrapper">
     <span class="music-credit">GEXEL // AUDIO 8-BIT</span>
-    <button id="music-toggle" class="music-btn" title="Activar/Silenciar Música">
-      <span id="music-icon">🔇</span>
+    <button id="music-toggle" class="music-btn" type="button">
+      <span id="music-icon"></span>
     </button>
   </div>
 
   <nav class="nav-hud">
     <div class="nav-container">
-      <a href="index.html" class="brand-group">
+      <a href="index.html" class="brand-group" aria-label="Gexel, inicio">
         <div class="brand-cube"></div>
         <div class="brand-title">GEXEL<span>.</span></div>
       </a>
@@ -140,7 +230,7 @@
         <li><a href="index.html" aria-current="page">Recursos</a></li>
         <li><a href="sobre-mi.html">Sobre mí</a></li>
         <li><a href="plugins.html">Plugins</a></li>
-        <li><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
+        <li class="nav-ext"><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
       </ul>
 
       <div class="nav-badge-status">
@@ -150,19 +240,16 @@
     </div>
   </nav>
 
-  <header class="hero hero-compact">
-    <p class="hero-eyebrow">GEXEL // RECURSOS</p>
-    <h1 class="hero-title">Recursos</h1>
-    <p class="hero-byline">Programas que uso y recomiendo en mis videos</p>
+  <header class="page-head">
+    <h1 class="page-title">Recursos</h1>
+    <p class="page-lede">Programas que uso y recomiendo en mis videos.</p>
   </header>
 
-  <div class="warden-divider"><div class="divider-eye"></div></div>
-
-  <main class="main-wrapper resources-section">
-    <p class="section-eyebrow">Catálogo</p>
-    <h2 class="section-headline">Software recomendado</h2>
-    <div class="resources-grid" id="resources-grid"></div>
-    <noscript><p class="section-subtitle">Activa JavaScript para ver los recursos. Mientras tanto: <a href="https://github.com/maxrave-dev/SimpMusic/releases/latest" style="color:#00e5ff">SimpMusic</a>.</p></noscript>
+  <main class="resources">
+    <div class="res-filters" id="res-filters" role="group" aria-label="Filtrar por categoría" hidden></div>
+    <div class="res-list" id="res-list"></div>
+    <noscript><p class="res-soon">Activa JavaScript para ver la lista. Mientras tanto: <a href="https://github.com/maxrave-dev/SimpMusic/releases/latest" style="color:#00e5ff">SimpMusic</a>.</p></noscript>
+    <p class="res-soon" id="res-soon" style="--i: 2">Más programas pronto: los verás primero en Instagram.</p>
   </main>
 
   <footer>
@@ -175,84 +262,101 @@
     // RECURSOS: para agregar un programa nuevo, copia un bloque { ... }
     // dentro de este array y cambia sus datos. Nada más.
     //   name        → nombre que se muestra
-    //   description → descripción corta en español
-    //   url         → enlace al que va toda la tarjeta (se abre en pestaña nueva)
-    //   icon        → URL o ruta (p. ej. 'img/mi-icono.png', guárdalo en img/); si falla, se usa la inicial
-    //   tags        → etiquetas pequeñas, ej. ['Android', 'Gratis']
-    //   cta         → (opcional) texto del botón, por defecto 'Descargar ↗'
-    // La tarjeta "Próximamente…" se agrega sola al final.
+    //   description → una línea corta en español
+    //   url         → enlace del botón principal "Descargar" (pestaña nueva)
+    //   repo        → (opcional) enlace del botón "Código"; si falta, no se muestra
+    //   icon        → ruta de la imagen (p. ej. 'img/mi-app.png', guárdala en img/);
+    //                 si falla, se usa la inicial del nombre
+    //   tags        → chips pequeños, ej. ['Android', 'Gratis']
+    //   category    → (opcional) ej. 'Música'. Si hay 2 o más categorías distintas,
+    //                 aparecen botones de filtro arriba automáticamente.
+    //   cta         → (opcional) texto del botón principal, por defecto 'Descargar'
+    // El texto "Más programas pronto" se muestra solo al final.
     // ─────────────────────────────────────────────────────────────
     const RESOURCES = [
       {
         name: 'SimpMusic',
-        description: 'Cliente gratuito y de código abierto para YouTube Music en Android y escritorio: sin anuncios y con reproducción en segundo plano.',
+        description: 'Cliente gratuito y de código abierto para YouTube Music: sin anuncios y con reproducción en segundo plano.',
         url: 'https://github.com/maxrave-dev/SimpMusic/releases/latest',
+        repo: 'https://github.com/maxrave-dev/SimpMusic',
         icon: 'img/simpmusic.png',
-        tags: ['Android', 'Open Source', 'Gratis'],
+        tags: ['Android', 'Escritorio', 'Open Source', 'Gratis'],
+        category: 'Música',
       },
-      // { name: '', description: '', url: '', icon: '', tags: [] },
+      // { name: '', description: '', url: '', repo: '', icon: 'img/', tags: [], category: '' },
     ];
 
     (function renderResources() {
-      const grid = document.getElementById('resources-grid');
-      if (!grid) return;
+      const list = document.getElementById('res-list');
+      const filters = document.getElementById('res-filters');
+      if (!list) return;
 
-      RESOURCES.forEach((r) => {
-        const a = document.createElement('a');
-        a.className = 'res-card';
-        a.href = r.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
+      const el = (tag, cls, text) => {
+        const n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (text != null) n.textContent = text;
+        return n;
+      };
 
-        const head = document.createElement('div');
-        head.className = 'res-head';
+      const items = RESOURCES.map((r, i) => {
+        const art = el('article', 'res');
+        art.style.setProperty('--i', i);
+        art.dataset.category = r.category || '';
 
-        const img = document.createElement('img');
-        img.className = 'res-icon';
+        const img = el('img', 'res-icon');
         img.alt = '';
-        img.loading = 'lazy';
-        img.referrerPolicy = 'no-referrer';
+        img.width = 96; img.height = 96;
         img.onerror = () => {
-          const ph = document.createElement('div');
-          ph.className = 'res-icon';
-          ph.style.cssText = 'display:flex;align-items:center;justify-content:center;font-family:Silkscreen,cursive;font-size:22px;color:#00e5ff';
-          ph.textContent = (r.name || '?').charAt(0).toUpperCase();
+          const ph = el('div', 'res-icon is-fallback', (r.name || '?').charAt(0).toUpperCase());
+          ph.setAttribute('aria-hidden', 'true');
           img.replaceWith(ph);
         };
         img.src = r.icon || '';
 
-        const name = document.createElement('h3');
-        name.className = 'res-name';
-        name.textContent = r.name;
-        head.append(img, name);
+        const body = el('div', 'res-body');
+        body.append(el('h2', 'res-name', r.name), el('p', 'res-desc', r.description));
+        const tags = el('ul', 'res-tags');
+        (r.tags || []).forEach(t => tags.appendChild(el('li', 'res-tag', t)));
+        body.appendChild(tags);
 
-        const desc = document.createElement('p');
-        desc.className = 'res-desc';
-        desc.textContent = r.description;
+        const actions = el('div', 'res-actions');
+        const main = el('a', 'btn btn-primary', (r.cta || 'Descargar') + ' ↗');
+        main.href = r.url; main.target = '_blank'; main.rel = 'noopener';
+        main.setAttribute('aria-label', (r.cta || 'Descargar') + ' ' + r.name + ' (se abre en una pestaña nueva)');
+        actions.appendChild(main);
+        if (r.repo) {
+          const code = el('a', 'btn btn-quiet', 'Código');
+          code.href = r.repo; code.target = '_blank'; code.rel = 'noopener';
+          code.setAttribute('aria-label', 'Código fuente de ' + r.name + ' (se abre en una pestaña nueva)');
+          actions.appendChild(code);
+        }
 
-        const tags = document.createElement('div');
-        tags.className = 'res-tags';
-        (r.tags || []).forEach((t) => {
-          const span = document.createElement('span');
-          span.className = 'res-tag';
-          span.textContent = t;
-          tags.appendChild(span);
-        });
-
-        const cta = document.createElement('span');
-        cta.className = 'res-cta';
-        cta.textContent = r.cta || 'Descargar ↗';
-
-        a.append(head, desc, tags, cta);
-        grid.appendChild(a);
+        art.append(img, body, actions);
+        list.appendChild(art);
+        return art;
       });
 
-      const soon = document.createElement('div');
-      soon.className = 'res-card is-soon';
-      soon.textContent = 'Próximamente…';
-      grid.appendChild(soon);
-    })();
+      const soon = document.getElementById('res-soon');
+      if (soon) soon.style.setProperty('--i', items.length);
 
+      // Filtros: solo si hay 2+ categorías distintas
+      const cats = [...new Set(RESOURCES.map(r => r.category).filter(Boolean))];
+      if (filters && cats.length >= 2) {
+        filters.hidden = false;
+        const make = (label, value) => {
+          const b = el('button', 'chip-btn', label);
+          b.type = 'button';
+          b.setAttribute('aria-pressed', value === '' ? 'true' : 'false');
+          b.addEventListener('click', () => {
+            filters.querySelectorAll('.chip-btn').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+            items.forEach(a => { a.hidden = value !== '' && a.dataset.category !== value; });
+          });
+          filters.appendChild(b);
+        };
+        make('Todos', '');
+        cats.forEach(c => make(c, c));
+      }
+    })();
   </script>
 </body>
 </html>
