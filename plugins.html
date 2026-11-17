@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plugins — Gexel</title>
+
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css">
+
+  <style>
+    .plugins-section .section-headline { margin-bottom: 36px; }
+    .cards-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      gap: 32px; 
+    }
+
+    .card-wrapper { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+    }
+    
+    .card-version {
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 12px; 
+      font-weight: bold;
+      letter-spacing: 2px; 
+      color: #4dd0e1; 
+      text-transform: uppercase; 
+      padding-left: 4px;
+    }
+    
+    .card {
+      position: relative; 
+      height: 240px; 
+      border-radius: 12px; 
+      overflow: hidden;
+      cursor: pointer; 
+      border: 1px solid rgba(0,229,255,0.2);
+      transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      background-color: #081217; 
+      background-size: cover; 
+      background-position: center; 
+      display: block; 
+      text-decoration: none;
+    }
+    
+    .card:hover, .card:focus-visible {
+      transform: translateY(6px) scale(0.98); 
+      border-color: rgba(0,229,255,0.8);
+      box-shadow: 0 0 0 1px rgba(0,229,255,0.6), 0 0 30px rgba(0,229,255,0.3), 0 20px 40px rgba(0,0,0,0.6);
+    }
+    
+    .card-overlay {
+      position: absolute; 
+      inset: 0; 
+      z-index: 1; 
+      transition: background 0.3s ease;
+      background: linear-gradient(180deg, rgba(3, 8, 11, 0.85) 0%, rgba(3, 8, 11, 0.75) 40%, rgba(0, 15, 20, 0.95) 100%);
+    }
+    
+    .card:hover .card-overlay {
+      background: linear-gradient(180deg, rgba(3, 8, 11, 0.70) 0%, rgba(3, 8, 11, 0.60) 40%, rgba(0, 15, 20, 0.90) 100%);
+    }
+    
+    .card-shine {
+      position: absolute; 
+      top: 0; 
+      left: -120%; 
+      width: 50%; 
+      height: 100%; 
+      z-index: 2; 
+      pointer-events: none; 
+      transition: left 0s;
+      background: linear-gradient(105deg, transparent 30%, rgba(0,229,255,0.2) 50%, rgba(0,229,255,0.05) 60%, transparent 70%);
+    }
+    
+    .card:hover .card-shine { 
+      left: 200%; 
+      transition: left 0.7s ease; 
+    }
+
+    .card-content { 
+      position: relative; 
+      z-index: 3; 
+      height: 100%; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: flex-end; 
+      padding: 24px; 
+    }
+    
+    .card-tag {
+      display: inline-block; 
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 10px; 
+      font-weight: bold;
+      letter-spacing: 2px; 
+      background: rgba(0,229,255,0.15); 
+      border: 1px solid rgba(0,229,255,0.4);
+      color: #00e5ff; 
+      padding: 4px 10px; 
+      border-radius: 4px; 
+      margin-bottom: 12px; 
+      width: fit-content;
+    }
+    
+    .card-name { 
+      font-family: 'Silkscreen', cursive; 
+      font-size: 26px; 
+      color: #ffffff; 
+      margin-bottom: 8px; 
+    }
+    
+    .card-desc { 
+      font-size: 14px; 
+      color: #92dce8; 
+      line-height: 1.6; 
+    }
+    
+    .card-arrow {
+      position: absolute; 
+      top: 20px; 
+      right: 20px; 
+      z-index: 3; 
+      opacity: 0; 
+      color: #00e5ff; 
+      font-size: 22px; 
+      font-weight: bold;
+      transform: translate(-10px, 10px); 
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .card:hover .card-arrow { 
+      opacity: 1; 
+      transform: translate(0, 0); 
+    }
+
+    /* Imágenes de fondo */
+    .card-grise      { background-image: url('img/grise-bg.jpg'); }
+    .card-boxtop     { background-image: url('img/boxtop-bg.jpg'); }
+    .card-findgame   { background-image: url('img/findgame-bg.jpg'); }
+    .card-lancercore { background-image: url('img/lancercore-bg.jpg'); }
+
+    .hero .intro-text { min-height: 1.8em; }
+    @media (max-width: 640px) { .main-wrapper { padding: 0 20px 80px; } .hero { padding: 48px 20px 40px; } }
+  </style>
+</head>
+<body>
+
+  <div id="particles"></div>
+
+  <audio id="bg-music" loop preload="auto"><source src="music/ambient.mp3" type="audio/mpeg"></audio>
+  <audio id="note-sound" preload="auto"><source src="music/bit.mp3" type="audio/mpeg"></audio>
+
+  <div class="modal-overlay" id="coupon-modal">
+    <div class="modal-content">
+      <h3 class="modal-title">SECRET UNLOCKED!</h3>
+      <p class="modal-msg">Premium Plugins are coming soon... Stay tuned to this page!</p>
+      <button class="action-btn-primary" onclick="document.getElementById('coupon-modal').classList.remove('active')">Got it!</button>
+    </div>
+  </div>
+
+  <div class="music-wrapper">
+    <span class="music-credit">GEXEL // AUDIO 8-BIT</span>
+    <button id="music-toggle" class="music-btn" title="Activar/Silenciar Música">
+      <span id="music-icon">🔇</span>
+    </button>
+  </div>
+
+  <nav class="nav-hud">
+    <div class="nav-container">
+      <a href="index.html" class="brand-group">
+        <div class="brand-cube"></div>
+        <div class="brand-title">GEXEL<span>.</span></div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html">Recursos</a></li>
+        <li><a href="sobre-mi.html">Sobre mí</a></li>
+        <li><a href="plugins.html" aria-current="page">Plugins</a></li>
+        <li><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
+      </ul>
+
+      <div class="nav-badge-status">
+        <span class="status-dot-blink"></span>
+        <span>STUDIO ONLINE</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <p class="hero-eyebrow">Minecraft Plugin Development</p>
+    <h1 class="hero-title">My Plugins</h1>
+    <p class="hero-byline">made by _gengis</p>
+
+    <div class="hero-intro-box">
+      <div class="note-block-container">
+        <span class="click-me-text">CLICK ME!</span>
+        <div id="note-block" class="note-block" title="Toca el bloque"></div>
+      </div>
+      <p class="intro-text"><span id="typed-text"></span><span class="cursor-blink"></span></p>
+      <div class="pixel-sprite"></div>
+    </div>
+  </header>
+
+  <div class="warden-divider"><div class="divider-eye"></div></div>
+
+  <main class="main-wrapper plugins-section">
+    <p class="section-eyebrow">Catalogue</p>
+    <h2 class="section-headline">Plugins</h2>
+    <div class="cards-grid">
+      <div class="card-wrapper">
+        <span class="card-version">1.21+</span>
+        <a class="card card-grise" href="docs/g-rise.html" target="_blank">
+          <div class="card-overlay"></div><div class="card-shine"></div><span class="card-arrow">&#8599;</span>
+          <div class="card-content">
+            <span class="card-tag">Minigame</span><p class="card-name">[G-Rise]</p>
+            <p class="card-desc">Vertical parkour powered by the Mace &amp; Wind Burst enchantment.</p>
+          </div>
+        </a>
+      </div>
+      <div class="card-wrapper">
+        <span class="card-version">1.12.2 &ndash; 1.21+</span>
+        <a class="card card-boxtop" href="docs/boxtop.html" target="_blank">
+          <div class="card-overlay"></div><div class="card-shine"></div><span class="card-arrow">&#8599;</span>
+          <div class="card-content">
+            <span class="card-tag">Utility</span><p class="card-name">[BoxTop]</p>
+            <p class="card-desc">Advanced block-top leaderboard system for any server.</p>
+          </div>
+        </a>
+      </div>
+      <div class="card-wrapper">
+        <span class="card-version">1.16 &ndash; 1.21+</span>
+        <a class="card card-findgame" href="docs/findgame.html" target="_blank">
+          <div class="card-overlay"></div><div class="card-shine"></div><span class="card-arrow">&#8599;</span>
+          <div class="card-content">
+            <span class="card-tag">Matchmaking</span><p class="card-name">[FindGame]</p>
+            <p class="card-desc">Smart cross-server matchmaking &amp; queue engine.</p>
+          </div>
+        </a>
+      </div>
+      <div class="card-wrapper">
+        <span class="card-version">1.21</span>
+        <a class="card card-lancercore" href="docs/lancercore.html" target="_blank">
+          <div class="card-overlay"></div><div class="card-shine"></div><span class="card-arrow">&#8599;</span>
+          <div class="card-content">
+            <span class="card-tag">Framework</span><p class="card-name">[LancerCore]</p>
+            <p class="card-desc">Shared library &amp; API powering all _gengis plugins.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 Gexel Technologies &mdash; Creado por <a href="https://github.com/gegecam30" target="_blank" rel="noopener">gegecam30</a> &amp; <a href="https://github.com/TUXERO1986" target="_blank" rel="noopener">TUXERO1986</a> &mdash; All Rights Reserved
+  </footer>
+
+  <script src="site.js"></script>
+  <script>
+    // 2. Texto Animado
+    const ENCHANT = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const MESSAGES = [
+      { lang: 'en', text: 'Hello, here are all my plugins with their documentation. Crafted with a focus on performance and clean architecture.' },
+      { lang: 'enchant', text: '' },
+      { lang: 'es', text: 'Hola, aquí están todos mis plugins con su documentación. Construidos con enfoque en rendimiento y arquitectura limpia.' },
+      { lang: 'enchant', text: '' },
+    ];
+
+    let msgIdx = 0, charIdx = 0;
+    const el = document.getElementById('typed-text');
+
+    function randEnchant(len) {
+      let s = '';
+      for (let i = 0; i < len; i++) {
+        s += ENCHANT[Math.floor(Math.random() * ENCHANT.length)];
+      }
+      return s;
+    }
+
+    function typeNext() {
+      const cur = MESSAGES[msgIdx];
+      if (cur.lang === 'enchant') { 
+        glitchPhase(); 
+        return; 
+      }
+      if (charIdx <= cur.text.length) {
+        el.textContent = cur.text.slice(0, charIdx);
+        charIdx++;
+        setTimeout(typeNext, charIdx < 5 ? 55 : 24);
+      } else { 
+        setTimeout(erasePhase, 3500); 
+      }
+    }
+
+    function erasePhase() {
+      if (charIdx > 0) {
+        charIdx--;
+        el.textContent = MESSAGES[msgIdx].text.slice(0, charIdx);
+        setTimeout(erasePhase, 10);
+      } else {
+        msgIdx = (msgIdx + 1) % MESSAGES.length;
+        charIdx = 0;
+        setTimeout(typeNext, 300);
+      }
+    }
+
+    function glitchPhase() {
+      let rounds = 0; 
+      const max = 22, startLen = 45;
+      el.style.color = '#00e5ff'; 
+      el.style.textShadow = '0 0 10px #00e5ff';
+      el.classList.add('is-enchanting'); 
+
+      (function tick() {
+        rounds++;
+        const len = Math.max(3, startLen - Math.floor(rounds * 1.8));
+        el.textContent = randEnchant(len);
+        if (rounds < max) {
+          setTimeout(tick, 40 + rounds * 4);
+        } else {
+          el.textContent = ''; 
+          el.style.color = ''; 
+          el.style.textShadow = '';
+          el.classList.remove('is-enchanting'); 
+          msgIdx = (msgIdx + 1) % MESSAGES.length; 
+          charIdx = 0;
+          setTimeout(typeNext, 250);
+        }
+      })();
+    }
+    
+    setTimeout(typeNext, 800);
+
+
+    // 3. Bloque musical + cupón (50 clics)
+    const noteBlock = document.getElementById('note-block');
+    const noteSound = document.getElementById('note-sound');
+    const couponModal = document.getElementById('coupon-modal');
+    if (noteBlock && noteSound) {
+      noteSound.volume = 0.5;
+      noteSound.preservesPitch = false;
+      if (noteSound.mozPreservesPitch !== undefined) noteSound.mozPreservesPitch = false;
+      if (noteSound.webkitPreservesPitch !== undefined) noteSound.webkitPreservesPitch = false;
+      let blockClicks = 0;
+
+      noteBlock.addEventListener('click', (e) => {
+        e.stopPropagation();
+        blockClicks++;
+        noteBlock.classList.remove('hit');
+        void noteBlock.offsetWidth;
+        noteBlock.classList.add('hit');
+
+        noteSound.playbackRate = Math.min(3.0, 1.0 + blockClicks * 0.05);
+        noteSound.currentTime = 0;
+        noteSound.play().catch(() => console.log('Error audio note block'));
+
+        if (blockClicks === 50) {
+          if (couponModal) couponModal.classList.add('active');
+          blockClicks = 0;
+          noteSound.playbackRate = 1.0;
+        }
+        window.GexelAudio.startIfAllowed();
+      });
+    }
+    if (couponModal) {
+      couponModal.addEventListener('click', (e) => {
+        if (e.target === couponModal) couponModal.classList.remove('active');
+      });
+    }
+  </script>
+</body>
+</html>

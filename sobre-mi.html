@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre mí — Gexel Software Studio</title>
+
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="site.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    /* ── Custom Fonts ── */
+    @font-face { 
+      font-family: 'Galactic'; 
+      src: url('fonts/minecraft-enchantment.ttf') format('truetype'); 
+    }
+
+    :root {
+      --bg: #050a0d;
+      --bg-card: #081217;
+      --cyan: #00e5ff;
+      --cyan-dim: #00bcd4;
+      --cyan-glow: rgba(0, 229, 255, 0.45);
+      --border-cyan: rgba(0, 229, 255, 0.2);
+      --border-hover: rgba(0, 229, 255, 0.8);
+      --text-main: #c9e8f0;
+      --text-light: #ffffff;
+      --text-muted: #5e8c97;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 40%, rgba(0, 229, 255, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 85% 25%, rgba(0, 188, 212, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, rgba(0, 229, 255, 0.03) 0%, transparent 60%);
+      position: relative;
+    }
+
+    /* ── Floating Particles ── */
+    #particles { 
+      position: fixed; 
+      inset: 0; 
+      pointer-events: none; 
+      z-index: 0; 
+    }
+    
+    .particle {
+      position: absolute; 
+      width: 3px; 
+      height: 3px; 
+      background: var(--cyan);
+      border-radius: 50%; 
+      opacity: 0; 
+      box-shadow: 0 0 8px 2px rgba(0, 229, 255, 0.6);
+      animation: floatUp linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) translateX(0px); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-120px) translateX(40px); opacity: 0; }
+    }
+
+    /* ── Audio Control Widget ── */
+    .music-wrapper {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(8, 18, 23, 0.85);
+      border: 1px solid var(--border-cyan);
+      padding: 6px 14px;
+      border-radius: 30px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .music-wrapper.is-active {
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+    }
+
+    .music-credit {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan-dim);
+      letter-spacing: 0.5px;
+    }
+
+    .music-btn {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.15);
+    }
+
+    /* ── Hero Section (Non-Generic HUD Style) ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 80px 24px 60px;
+      text-align: center;
+      background: radial-gradient(ellipse 65% 55% at 50% 0%, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+      border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 6px;
+      color: var(--cyan-dim);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+
+    .hero-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: clamp(38px, 6vw, 76px);
+      letter-spacing: 2px;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #00838f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.35));
+    }
+
+    .hero-byline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(14px, 1.8vw, 18px);
+      letter-spacing: 3px;
+      color: #4dd0e1;
+      margin-bottom: 40px;
+      text-shadow: 0 0 8px rgba(77, 208, 225, 0.4);
+    }
+
+    /* ── Hero Intro Terminal Box (Custom Interactive) ── */
+    .hero-intro-box {
+      margin: 0 auto;
+      max-width: 760px;
+      min-height: 96px;
+      background: rgba(0, 229, 255, 0.03);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 8px;
+      padding: 24px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 25px rgba(0, 229, 255, 0.03), 0 0 25px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .intro-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #bdf2fb;
+      letter-spacing: 0.3px;
+    }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: var(--cyan);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 0.8s step-end infinite;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .is-enchanting {
+      font-family: 'Galactic', sans-serif !important;
+      font-size: 19px;
+      letter-spacing: 3px;
+    }
+
+    /* Note block easter egg */
+    .note-block-container {
+      position: absolute;
+      left: -90px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .click-me-text {
+      font-family: 'Silkscreen', cursive;
+      font-size: 10px;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+      animation: bounceText 1.5s infinite;
+    }
+
+    @keyframes bounceText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .note-block {
+      width: 56px;
+      height: 56px;
+      background-image: url('note-block.png');
+      background-size: cover;
+      image-rendering: pixelated;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .note-block:hover {
+      filter: brightness(1.25);
+      transform: scale(1.05);
+    }
+
+    .note-block.hit {
+      animation: blockJump 0.2s ease-out;
+    }
+
+    @keyframes blockJump {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+
+    .pixel-sprite {
+      position: absolute;
+      right: -36px;
+      top: -28px;
+      width: 64px;
+      height: 64px;
+      background: url('sprite.png') left center;
+      animation: playSprite 0.8s steps(4) infinite;
+      z-index: 5;
+      filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.5));
+    }
+
+    @keyframes playSprite {
+      100% { background-position: -256px; }
+    }
+
+    /* ── Warden Glowing Eye Divider ── */
+    .warden-divider {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 48px;
+      margin: 60px 0 50px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .warden-divider::before,
+    .warden-divider::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,0.35), transparent);
+    }
+
+    .divider-eye {
+      flex-shrink: 0;
+      width: 42px;
+      height: 20px;
+      border: 2px solid rgba(0, 229, 255, 0.85);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.25) inset;
+    }
+
+    .divider-eye::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: eyePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes eyePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--cyan), 0 0 20px rgba(0,229,255,0.7); }
+      50% { opacity: 0.15; box-shadow: none; }
+    }
+
+    /* ── Main Container ── */
+    .main-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section Labels & Headers */
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 5px;
+      color: var(--cyan-dim);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
+    }
+
+    .section-headline {
+      font-family: 'Silkscreen', cursive;
+      font-size: clamp(28px, 4vw, 42px);
+      color: #ffffff;
+      margin-bottom: 36px;
+      text-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+    }
+
+    /* ── Flagship Showcase: PexRead ── */
+    .flagship-box {
+      background: #081217;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.03), 0 0 30px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 70px;
+    }
+
+    .flagship-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+
+    .flagship-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .flagship-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--cyan);
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid var(--border-cyan);
+      padding: 4px 12px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .flagship-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: 32px;
+      color: #fff;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+
+    .flagship-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #bdf2fb;
+      margin-bottom: 24px;
+    }
+
+    .flagship-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .flagship-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .flagship-points li::before {
+      content: '>';
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    .flagship-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--cyan);
+      color: #050a0d;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.35);
+      border: none;
+      cursor: pointer;
+    }
+
+    .action-btn-primary:hover {
+      background: #fff;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .action-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(5, 10, 13, 0.85);
+      border: 1px solid var(--border-cyan);
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transition: all 0.25s ease;
+    }
+
+    .action-btn-outline:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 229, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Flagship Technical HUD Card */
+    .tech-hud-card {
+      background: #04090c;
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 8px;
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .tech-hud-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      color: var(--cyan-dim);
+    }
+
+    .tech-hud-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--text-muted);
+    }
+
+    .tech-hud-row span.val {
+      color: #fff;
+    }
+
+    .tech-hud-row span.val.cyan {
+      color: var(--cyan);
+    }
+
+    .tech-hud-codeblock {
+      background: rgba(0, 229, 255, 0.04);
+      border: 1px dashed rgba(0, 229, 255, 0.2);
+      padding: 14px;
+      border-radius: 4px;
+      margin-top: 16px;
+      color: #4dd0e1;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    /* ── The 2-Founder Team Section ── */
+    .team-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 70px;
+    }
+
+    .founder-card {
+      background: #081217;
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .founder-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 229, 255, 0.8);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.25);
+    }
+
+    .founder-top {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .founder-avatar-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 12px;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 15px var(--cyan-glow);
+      object-fit: cover;
+      background: #030709;
+    }
+
+    .founder-handle-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .founder-name {
+      font-family: 'Silkscreen', cursive;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .founder-gh-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--cyan);
+      margin-top: 4px;
+    }
+
+    .founder-role-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #4dd0e1;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .founder-bio {
+      font-size: 14px;
+      color: #bdf2fb;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      flex-grow: 1;
+    }
+
+    .founder-skills-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .founder-skill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      background: rgba(0, 229, 255, 0.05);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 4px;
+      color: var(--cyan-dim);
+    }
+
+    .founder-gh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-cyan);
+      border-radius: 4px;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s ease;
+      width: fit-content;
+    }
+
+    .founder-gh-btn:hover {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--cyan);
+      color: #fff;
+    }
+
+    .founder-gh-btn img {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      image-rendering: pixelated;
+    }
+
+    .anchor-row {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+      margin: -20px auto 40px; padding: 0 20px;
+    }
+    .anchor-row a { text-decoration: none; }
+
+    /* ── Investor Desk / Contact (Styled for Gexel) ── */
+    .investor-box {
+      background: #081217;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 12px;
+      padding: 44px 32px;
+      text-align: center;
+      box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.04), 0 0 35px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .investor-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 14px;
+      text-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .investor-text {
+      max-width: 680px;
+      margin: 0 auto 32px;
+      color: #bdf2fb;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .contact-channels-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .channel-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      background: rgba(5, 10, 13, 0.85);
+      border: 1px solid var(--border-cyan);
+      border-radius: 4px;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .channel-btn:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* ── Modal Copy Email ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 8, 11, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #081217;
+      border: 2px solid var(--cyan);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 0 45px rgba(0, 229, 255, 0.25);
+    }
+
+    .modal-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .modal-msg {
+      font-size: 14px;
+      color: #bdf2fb;
+      margin-bottom: 24px;
+    }
+
+    .copy-input-row {
+      display: flex;
+      border: 1px solid var(--border-cyan);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .copy-input {
+      flex: 1;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .copy-action-btn {
+      background: var(--cyan);
+      color: #050a0d;
+      border: none;
+      padding: 0 20px;
+      font-family: 'Silkscreen', cursive;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-action-btn:hover {
+      background: #fff;
+    }
+
+    .modal-close-link {
+      background: transparent;
+      border: none;
+      color: rgba(0, 229, 255, 0.5);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(0,229,255,0.1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: rgba(0,229,255,0.5);
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .flagship-grid {
+        grid-template-columns: 1fr;
+      }
+      .note-block-container {
+        display: none;
+      }
+      .pixel-sprite {
+        display: none;
+      }
+      .warden-divider {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Particles Canvas -->
+  <div id="particles"></div>
+
+  <!-- Audio Elements from Myweb -->
+  <audio id="bg-music" loop preload="auto"><source src="music/ambient.mp3" type="audio/mpeg"></audio>
+  <audio id="note-sound" preload="auto"><source src="music/bit.mp3" type="audio/mpeg"></audio>
+
+  <!-- Background Music Toggle -->
+  <div class="music-wrapper">
+    <span class="music-credit">GEXEL // AUDIO 8-BIT</span>
+    <button id="music-toggle" class="music-btn" title="Activar/Silenciar Música">
+      <span id="music-icon">🔇</span>
+    </button>
+  </div>
+
+  <nav class="nav-hud">
+    <div class="nav-container">
+      <a href="index.html" class="brand-group">
+        <div class="brand-cube"></div>
+        <div class="brand-title">GEXEL<span>.</span></div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html">Recursos</a></li>
+        <li><a href="sobre-mi.html" aria-current="page">Sobre mí</a></li>
+        <li><a href="plugins.html">Plugins</a></li>
+        <li><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
+      </ul>
+
+      <div class="nav-badge-status">
+        <span class="status-dot-blink"></span>
+        <span>STUDIO ONLINE</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Custom HUD Style inspired by Myweb) -->
+  <header class="hero">
+    <p class="hero-eyebrow">GEXEL TECHNOLOGY LABS // ENGINEERING DUO</p>
+    <h1 class="hero-title">GEXEL</h1>
+    <p class="hero-byline">Intelligent Software &amp; Contextual Copilots</p>
+
+    <div class="hero-intro-box">
+      <div class="note-block-container">
+        <span class="click-me-text">CLICK ME!</span>
+        <div id="note-block" class="note-block" title="Toca el bloque"></div>
+      </div>
+
+      <p class="intro-text">
+        <span id="typed-text"></span><span class="cursor-blink"></span>
+      </p>
+
+      <div class="pixel-sprite"></div>
+    </div>
+  </header>
+
+  <!-- Warden Pulsing Eye Divider -->
+  <div class="warden-divider">
+    <div class="divider-eye"></div>
+  </div>
+
+  <div class="anchor-row">
+    <a class="action-btn-outline" href="#flagship">PexRead</a>
+    <a class="action-btn-outline" href="#team">Equipo</a>
+    <a class="action-btn-outline" href="#investors">Inversores</a>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- Flagship Product: PexRead -->
+    <section id="flagship" class="flagship-box">
+      <div class="flagship-grid">
+        <div>
+          <div class="flagship-badge">
+            <span>FLAGSHIP PRODUCT // v2.4 OFICIAL</span>
+          </div>
+          <h2 class="flagship-title">PexRead</h2>
+          <p class="flagship-desc">
+            Copiloto inteligente de lectura dialógica y estudio académico asistido por IA para Chromium y la plataforma <strong>Perusall</strong>. Emula el razonamiento analítico de un estudiante sobresaliente, optimizando el tiempo y la profundidad del aprendizaje.
+          </p>
+
+          <ul class="flagship-points">
+            <li><strong>Soberanía en Memoria:</strong> Procesamiento local y seguro sin retención de datos sensibles del estudiante.</li>
+            <li><strong>Modelo Directo Validado:</strong> Licenciamiento ágil con entrega inmediata y tracción comunitaria real.</li>
+            <li><strong>Desplegado en Google Chrome Web Store:</strong> Extensión certificada y mantenida con actualizaciones periódicas.</li>
+          </ul>
+
+          <div class="flagship-actions">
+            <a href="https://pexread.gexel.fun" target="_blank" rel="noopener noreferrer" class="action-btn-primary">
+              <span>Visitar pexread.gexel.fun</span>
+              <span>&#8599;</span>
+            </a>
+            <a href="https://chromewebstore.google.com/detail/perusall-smart-co-pilot/mdjllgchpbdiempomlnhcjbllceeecbf" target="_blank" rel="noopener noreferrer" class="action-btn-outline">
+              <span>Chrome Web Store</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="tech-hud-card">
+            <div class="tech-hud-header">
+              <span>TELEMETRÍA // PEXREAD</span>
+              <span>v2.4 STABLE</span>
+            </div>
+            <div class="tech-hud-row">
+              <span>Status:</span>
+              <span class="val cyan">PRODUCTION [OK]</span>
+            </div>
+            <div class="tech-hud-row">
+              <span>Arquitectura:</span>
+              <span class="val">Chromium Client Ingestion</span>
+            </div>
+            <div class="tech-hud-row">
+              <span>Privacidad:</span>
+              <span class="val">Zero-Leak Local Memory</span>
+            </div>
+            <div class="tech-hud-row">
+              <span>Licencias:</span>
+              <span class="val cyan">Instant 2-Min Activation</span>
+            </div>
+            <div class="tech-hud-codeblock">
+              // GEXEL ARCHITECTURE THESIS<br>
+              Construir copilotos hiperespecíficos integrados al flujo del usuario. Menos intermediarios, alta retención y valor inmediato.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The 2-Founder Team Section -->
+    <section id="team">
+      <p class="section-eyebrow">CORE CREATORS</p>
+      <h2 class="section-headline">Equipo Fundador</h2>
+
+      <div class="team-cards-grid">
+        <!-- Founder 1: gegecam30 -->
+        <div class="founder-card">
+          <div class="founder-top">
+            <img src="gegecam.png" alt="gegecam30 avatar" class="founder-avatar-img" />
+            <div class="founder-handle-box">
+              <span class="founder-name">gegecam30</span>
+              <span class="founder-gh-tag">Cam Pizarro Gengis Gabriel</span>
+              <span class="founder-role-badge">Lead Systems &amp; AI Systems</span>
+            </div>
+          </div>
+
+          <p class="founder-bio">
+            Co-fundador de Gexel. Lidera el desarrollo de software, arquitectura de extensiones Chromium de alto rendimiento, pipelines de contexto e ingeniería inversa en flujos de trabajo web complejos.
+          </p>
+
+          <div class="founder-skills-box">
+            <span class="founder-skill-tag">Chromium APIs</span>
+            <span class="founder-skill-tag">AI Context Pipelines</span>
+            <span class="founder-skill-tag">Software Architecture</span>
+            <span class="founder-skill-tag">Reverse Engineering</span>
+          </div>
+
+          <a href="https://github.com/gegecam30" target="_blank" rel="noopener noreferrer" class="founder-gh-btn">
+            <img src="img/icon_github.png" alt="GitHub" />
+            <span>github.com/gegecam30</span>
+          </a>
+        </div>
+
+        <!-- Founder 2: TUXERO1986 -->
+        <div class="founder-card">
+          <div class="founder-top">
+            <img src="tuxero.png" alt="TUXERO1986 avatar" class="founder-avatar-img" />
+            <div class="founder-handle-box">
+              <span class="founder-name">TUXERO1986</span>
+              <span class="founder-gh-tag">Tuxito2312</span>
+              <span class="founder-role-badge">Product Strategy &amp; Infra</span>
+            </div>
+          </div>
+
+          <p class="founder-bio">
+            Co-fundador de Gexel. Especializado en diseño de interacción de producto, infraestructura de licenciamiento, despliegue de microservicios y crecimiento orgánico de comunidad.
+          </p>
+
+          <div class="founder-skills-box">
+            <span class="founder-skill-tag">Product Architecture</span>
+            <span class="founder-skill-tag">Licensing Infra</span>
+            <span class="founder-skill-tag">Cloud Delivery</span>
+            <span class="founder-skill-tag">Community Growth</span>
+          </div>
+
+          <a href="https://github.com/TUXERO1986" target="_blank" rel="noopener noreferrer" class="founder-gh-btn">
+            <img src="img/icon_github.png" alt="GitHub" />
+            <span>github.com/TUXERO1986</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Investor Desk / Contact Section -->
+    <section id="investors" class="investor-box">
+      <h2 class="investor-title">Oportunidades &amp; Alianzas</h2>
+      <p class="investor-text">
+        Gexel es un estudio independiente y ágil. Si eres inversor ángel, socio estratégico o te interesa colaborar en la expansión de nuestra cartera de herramientas inteligentes, hablemos directamente con el equipo fundador.
+      </p>
+
+      <div class="contact-channels-grid">
+        <button class="channel-btn" onclick="openContactModal()">
+          <span>✉ Correo: gengiscam.gexel.fun</span>
+        </button>
+        <a href="https://t.me/+kGDzj1dmtOs1MTdh" target="_blank" rel="noopener noreferrer" class="channel-btn">
+          <span>Telegram Oficial</span>
+        </a>
+        <a href="https://chat.whatsapp.com/L8FkTKsYhHQ2DMeQOAk0c5" target="_blank" rel="noopener noreferrer" class="channel-btn">
+          <span>Comunidad WhatsApp</span>
+        </a>
+        <a href="https://discord.gg/JPHfryuMeY" target="_blank" rel="noopener noreferrer" class="channel-btn">
+          <span>Discord Server</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Gexel Technologies &mdash; Creado por <a href="https://github.com/gegecam30" target="_blank">gegecam30</a> &amp; <a href="https://github.com/TUXERO1986" target="_blank">TUXERO1986</a> &mdash; All Rights Reserved
+  </footer>
+
+  <!-- Contact Modal -->
+  <div class="modal-overlay" id="contact-modal">
+    <div class="modal-content">
+      <h3 class="modal-title">Contacto Directo</h3>
+      <p class="modal-msg">Escríbenos para consultas de inversión, alianzas de distribución o soporte técnico.</p>
+
+      <div class="copy-input-row">
+        <input type="text" value="gengiscam@gexel.fun" id="email-value" class="copy-input" readonly />
+        <button class="copy-action-btn" id="btn-copy" onclick="copyEmail()">Copiar</button>
+      </div>
+
+      <button class="modal-close-link" onclick="closeContactModal()">[ Cerrar Ventana ]</button>
+    </div>
+  </div>
+
+  <script>
+    // ── 1. Partículas Flotantes ──
+    (function () {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const big = Math.random() < 0.25;
+        p.style.cssText = [
+          'left:' + (Math.random() * 100) + '%',
+          'bottom:' + (Math.random() * 20) + '%',
+          'width:' + (big ? 4 : 2) + 'px',
+          'height:' + (big ? 4 : 2) + 'px',
+          'animation-duration:' + (6 + Math.random() * 8) + 's',
+          'animation-delay:' + (Math.random() * 5) + 's',
+        ].join(';');
+        container.appendChild(p);
+      }
+    })();
+
+    // ── 2. Typewriter con Glitch Rúnico 'Galactic' (Estilo Myweb) ──
+    const ENCHANT = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const MESSAGES = [
+      { lang: 'es', text: 'Somos Gexel: Estudio de ingeniería enfocado en copilotos inteligentes y herramientas de alta retención.' },
+      { lang: 'enchant', text: '' },
+      { lang: 'en', text: 'We build high-velocity intelligent copilots and browser-native software with proven market traction.' },
+      { lang: 'enchant', text: '' },
+      { lang: 'es', text: 'Creadores de PexRead (v2.4 Oficial). Arquitectura en memoria y monetización real validada.' },
+      { lang: 'enchant', text: '' }
+    ];
+
+    let msgIdx = 0, charIdx = 0;
+    const el = document.getElementById('typed-text');
+
+    function randEnchant(len) {
+      let s = '';
+      for (let i = 0; i < len; i++) {
+        s += ENCHANT[Math.floor(Math.random() * ENCHANT.length)];
+      }
+      return s;
+    }
+
+    function typeNext() {
+      const cur = MESSAGES[msgIdx];
+      if (cur.lang === 'enchant') { 
+        glitchPhase(); 
+        return; 
+      }
+      if (charIdx <= cur.text.length) {
+        el.textContent = cur.text.slice(0, charIdx);
+        charIdx++;
+        setTimeout(typeNext, charIdx < 5 ? 50 : 22);
+      } else { 
+        setTimeout(erasePhase, 3600); 
+      }
+    }
+
+    function erasePhase() {
+      if (charIdx > 0) {
+        charIdx--;
+        el.textContent = MESSAGES[msgIdx].text.slice(0, charIdx);
+        setTimeout(erasePhase, 8);
+      } else {
+        msgIdx = (msgIdx + 1) % MESSAGES.length;
+        charIdx = 0;
+        setTimeout(typeNext, 250);
+      }
+    }
+
+    function glitchPhase() {
+      let rounds = 0; 
+      const max = 22, startLen = 42;
+      el.style.color = '#00e5ff'; 
+      el.style.textShadow = '0 0 10px #00e5ff';
+      el.classList.add('is-enchanting'); 
+
+      (function tick() {
+        rounds++;
+        const len = Math.max(3, startLen - Math.floor(rounds * 1.8));
+        el.textContent = randEnchant(len);
+        if (rounds < max) {
+          setTimeout(tick, 38 + rounds * 4);
+        } else {
+          el.textContent = ''; 
+          el.style.color = ''; 
+          el.style.textShadow = '';
+          el.classList.remove('is-enchanting'); 
+          msgIdx = (msgIdx + 1) % MESSAGES.length; 
+          charIdx = 0;
+          setTimeout(typeNext, 220);
+        }
+      })();
+    }
+
+    setTimeout(typeNext, 600);
+
+    // ── 3. Audio & Note Block Interactivo ──
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle');
+    const musicIcon = document.getElementById('music-icon');
+    const musicWrapper = document.querySelector('.music-wrapper');
+    let isPlaying = false;
+    let userHasInteracted = false;
+    let isMutedManually = false;
+
+    music.volume = 0.2;
+
+    function toggleMusic(forcePlay = false) {
+      if (isPlaying && !forcePlay) {
+        music.pause();
+        musicIcon.textContent = '🔇';
+        musicWrapper.classList.remove('is-active');
+        isPlaying = false;
+        isMutedManually = true;
+      } else {
+        music.play().then(() => {
+          musicIcon.textContent = '🔊';
+          musicWrapper.classList.add('is-active');
+          isPlaying = true;
+          isMutedManually = false;
+        }).catch(err => console.log('Audio autostart wait:', err));
+      }
+    }
+
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userHasInteracted = true;
+      toggleMusic();
+    });
+
+    const noteBlock = document.getElementById('note-block');
+    const noteSound = document.getElementById('note-sound');
+    noteSound.volume = 0.45;
+    let blockClicks = 0;
+
+    noteBlock.addEventListener('click', (e) => {
+      e.stopPropagation();
+      blockClicks++;
+
+      noteBlock.classList.remove('hit');
+      void noteBlock.offsetWidth;
+      noteBlock.classList.add('hit');
+
+      let newSpeed = 1.0 + (blockClicks * 0.05);
+      if (newSpeed > 2.8) newSpeed = 2.8;
+      noteSound.playbackRate = newSpeed;
+
+      noteSound.currentTime = 0;
+      noteSound.play().catch(e => console.log("Audio pitch error"));
+
+      if (!isPlaying && !isMutedManually) {
+        userHasInteracted = true;
+        toggleMusic(true);
+      }
+    });
+
+    // ── 4. Modal de Contacto ──
+    const contactModal = document.getElementById('contact-modal');
+    function openContactModal() {
+      contactModal.classList.add('active');
+    }
+    function closeContactModal() {
+      contactModal.classList.remove('active');
+    }
+    window.onclick = function(e) {
+      if (e.target === contactModal) {
+        closeContactModal();
+      }
+    };
+
+    function copyEmail() {
+      const emailInput = document.getElementById('email-value');
+      emailInput.select();
+      emailInput.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(emailInput.value);
+
+      const btn = document.getElementById('btn-copy');
+      btn.textContent = '¡Listo!';
+      btn.style.background = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.style.background = '#00e5ff';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

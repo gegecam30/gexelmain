@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="../icon.ico" type="image/x-icon">
+  <title>G-Rise | Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #050a0d;
+      color: #c9e8f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(0, 188, 212, 0.03) 0%, transparent 50%);
+    }
+
+    /* ── Navbar ── */
+    nav {
+      padding: 20px 48px;
+      border-bottom: 1px solid rgba(0,229,255,0.1);
+      background: rgba(5, 10, 13, 0.9);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .back-btn {
+      color: #00e5ff;
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      transition: text-shadow 0.3s;
+    }
+    .back-btn:hover { text-shadow: 0 0 10px #00e5ff; }
+
+    /* ── Contenedor Principal ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    /* ── Títulos ── */
+    h1 {
+      font-family: 'Silkscreen', cursive;
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(0,229,255,0.5);
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .tagline {
+      font-family: 'JetBrains Mono', monospace;
+      color: #4dd0e1;
+      font-size: 14px;
+      margin-bottom: 40px;
+      letter-spacing: 1px;
+    }
+    h2 {
+      font-family: 'Silkscreen', cursive;
+      font-size: 28px;
+      color: #fff;
+      margin: 50px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,229,255,0.2);
+    }
+    h3 {
+      color: #00e5ff;
+      margin: 30px 0 15px;
+      font-size: 20px;
+    }
+
+    /* ── Media Placeholders (Para tus GIFs) ── */
+    .media-placeholder {
+      width: 100%;
+      height: 350px;
+      background: rgba(0, 229, 255, 0.05);
+      border: 2px dashed rgba(0, 229, 255, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px 0;
+      color: rgba(0, 229, 255, 0.5);
+      font-family: 'JetBrains Mono', monospace;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* ── Textos y Cajas ── */
+    p { margin-bottom: 16px; color: #a8d4de; }
+    
+    .info-box {
+      background: rgba(0, 229, 255, 0.05);
+      border-left: 4px solid #00e5ff;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+    }
+
+    /* ── Código en línea y Bloques ── */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 229, 255, 0.1);
+      color: #00e5ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    pre {
+      background: #03080b;
+      border: 1px solid rgba(0,229,255,0.1);
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    pre code {
+      background: transparent;
+      color: #c9e8f0;
+      padding: 0;
+    }
+
+    /* ── Tablas de Comandos ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 40px;
+      background: rgba(5, 10, 13, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(0,229,255,0.1);
+    }
+    th {
+      background: rgba(0, 229, 255, 0.1);
+      font-family: 'JetBrains Mono', monospace;
+      color: #00e5ff;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: rgba(0, 229, 255, 0.03); }
+    .cmd { color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid rgba(0,229,255,0.1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: rgba(0,229,255,0.4);
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../plugins.html" class="back-btn">← Back to Plugins</a>
+    <span style="font-family: 'Silkscreen'; color: #fff;">[G-Rise]</span>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>G-Rise</h1>
+      <p class="tagline">Vertical parkour minigame powered by the Mace & Wind Burst (1.21+)</p>
+    </header>
+
+    <div class="info-box">
+      <strong>Overview:</strong> G-Rise is an innovative minigame where players use the Mace with the Wind Burst enchantment to bounce off entities (Wardens by default) and climb to the goal. It supports Solo modes with multiple difficulties and a multiplayer Race mode!
+    </div>
+
+    <video src="../img/gameplay.mp4" autoplay loop muted playsinline preload="metadata" aria-label="G-Rise Gameplay" style="width: 100%; border-radius: 12px; border: 1px solid rgba(0,229,255,0.2); box-shadow: 0 0 20px rgba(0,0,0,0.5); margin: 30px 0;"></video>
+
+    <section id="features">
+      <h2>Core Features</h2>
+      <ul>
+        <li><strong>Dynamic Spawning:</strong> Entities spawn dynamically based on the player's height.</li>
+        <li><strong>Custom Physics:</strong> Fully configurable Wind Burst multipliers and levitation rescue mechanics for stuck players.</li>
+        <li><strong>Combo System:</strong> Build hit streaks to trigger custom commands (e.g., give diamonds at 50x combo) and ascending pitch sounds.</li>
+        <li><strong>Multi-Mode:</strong> Easy, Medium, Hard, and Race (Multiplayer) difficulties.</li>
+        <li><strong>Database Support:</strong> Save player stats (wins, best times) using local SQLite or remote MySQL.</li>
+      </ul>
+    </section>
+
+    <section id="setup">
+      <h2>Arena Setup Guide</h2>
+      <p>Creating an arena in G-Rise is simple and handled entirely in-game using the visualizer.</p>
+      
+      <ol>
+        <li>Stand where you want the players to spawn and type: <code>/gr admin create &lt;name&gt;</code></li>
+        <li>Set the winning height (Goal Y). The visualizer will show you a gold particle ring at this height: <code>/gr admin setgoal &lt;name&gt; &lt;Y-coordinate&gt;</code></li>
+        <li>Set the playable radius (cyan border): <code>/gr admin setradius &lt;name&gt; &lt;radius&gt;</code></li>
+        <li><em>(Optional)</em> Change the target entity from Warden to Slime, Magma Cube, etc: <code>/gr admin setentity &lt;name&gt; SLIME</code></li>
+      </ol>
+
+      <div class="media-placeholder" style="height: auto; padding: 15px;">
+        <video src="../img/adm.mp4" autoplay loop muted playsinline preload="metadata" aria-label="G-Rise Setup Administration" style="width: 100%; border-radius: 8px; display: block;"></video>
+      </div>
+    </section>
+
+    <section id="commands">
+      <h2>Commands & Permissions</h2>
+      
+      <h3>Player Commands</h3>
+      <p>Permission: <code>grise.use</code> (Default: true)</p>
+      <table>
+        <tr>
+          <th>Command</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td class="cmd">/gr play &lt;arena&gt; [difficulty]</td>
+          <td>Join an arena solo. Difficulty defaults to Easy. Console can append [player] name to force join.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr race &lt;arena&gt;</td>
+          <td>Join the multiplayer race queue.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr leave</td>
+          <td>Leave your current game and return to the lobby.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr stats [player]</td>
+          <td>View your stats or someone else's (Games played, wins, best times).</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr top &lt;difficulty&gt;</td>
+          <td>Show the top 10 leaderboard for a specific difficulty.</td>
+        </tr>
+      </table>
+
+      <h3>Admin Commands</h3>
+      <p>Permission: <code>grise.admin</code> (Default: OP)</p>
+      <table>
+        <tr>
+          <th>Command</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td class="cmd">/gr admin create/delete &lt;name&gt;</td>
+          <td>Create or delete an arena.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr admin setspawn &lt;name&gt;</td>
+          <td>Updates the arena's spawn point to your location.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr admin setglow &lt;name&gt; &lt;r&gt; &lt;g&gt; &lt;b&gt;</td>
+          <td>Applies a custom RGB glowing outline to the target entities.</td>
+        </tr>
+        <tr>
+          <td class="cmd">/gr admin reload</td>
+          <td>Reloads config.yml and messages.yml.</td>
+        </tr>
+      </table>
+    </section>
+
+    <section id="configuration">
+      <h2>Configuration Highlights</h2>
+      <p>G-Rise is highly customizable. Here are some of the most important values in your <code>config.yml</code>.</p>
+      
+<pre><code># Fine-tune the Mace physics (Works in Survival & Creative)
+mace:
+  wind-burst-power: 1.2        # Base upward power per hit
+  wind-burst-multiplier: 1.2   # Extra multiplier
+
+# Combo Milestones (Executes console commands on streak)
+rewards:
+  enabled: true
+  milestones:
+    25:
+      title: "&c&lCOMBO x25!"
+      subtitle: "&4Unstoppable!"
+      command: "give %player% diamond 1"
+
+# Anti-stuck mechanics
+game:
+  fall-watch-timeout-ticks: 60  # Time before rescue activates
+  rescue-levitation-ticks: 40   # 2 seconds of levitation burst
+  rescue-levitation-amplifier: 9
+</code></pre>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2026 _gengis — Minecraft Plugin Development
+  </footer>
+
+</body>
+</html>
