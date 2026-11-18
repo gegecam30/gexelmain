@@ -130,14 +130,10 @@
     gap: 16px;
   }
   .brand-group { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .brand-cube {
-    width: 24px; height: 24px;
-    border: 2px solid var(--cyan);
-    box-shadow: 0 0 10px var(--cyan-glow);
-    display: flex; align-items: center; justify-content: center;
-    transform: rotate(45deg);
+  .brand-logo {
+    display: block; width: 30px; height: 30px;
+    filter: drop-shadow(0 0 6px var(--cyan-glow));
   }
-  .brand-cube::after { content: ''; width: 8px; height: 8px; background: var(--cyan); }
   .brand-title {
     font-family: 'Silkscreen', cursive;
     font-size: 20px; letter-spacing: 2px;
@@ -183,7 +179,7 @@
     .nav-menu { gap: 14px; }
     .nav-menu a { display: inline-block; font-size: 12px; padding: 16px 0 14px; letter-spacing: 0.5px; }
     .brand-title { display: none; }
-    .brand-cube { margin: 0 4px; }
+    .brand-logo { margin: 0 4px; }
   }
   @media (max-width: 340px) { .nav-menu { gap: 10px; } .nav-menu a { font-size: 11px; } }
 
