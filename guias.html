@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guías — Gexel</title>
+  <meta name="description" content="Guías cortas, paso a paso, de los trucos que enseño en mis vídeos." />
+
+  <link rel="icon" href="icon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css">
+
+  <style>
+    :root { --text-soft: #a9d3dc; }
+
+    .page-head {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 24px 28px;
+    }
+    .page-title {
+      font-family: 'Silkscreen', cursive;
+      font-size: clamp(34px, 7vw, 60px);
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .page-lede {
+      font-size: clamp(16px, 2.2vw, 19px);
+      line-height: 1.6;
+      color: var(--text-soft);
+      max-width: 52ch;
+    }
+
+    .guides {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: grid;
+      gap: 24px;
+    }
+    .guide {
+      background: var(--bg-card);
+      border: 1px solid var(--border-cyan);
+      border-radius: 12px;
+      padding: 28px clamp(18px, 4vw, 36px);
+      scroll-margin-top: 90px;
+    }
+    .guide-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--cyan-dim);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .guide h2 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 4vw, 30px);
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .guide h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--cyan);
+      margin: 26px 0 10px;
+    }
+    .guide p, .guide li {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+    .guide ol, .guide ul { padding-left: 22px; display: grid; gap: 8px; }
+    .guide a { color: var(--cyan); }
+    .guide strong { color: #fff; }
+    .note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-left: 3px solid #ffb020;
+      background: rgba(255, 176, 32, 0.06);
+      border-radius: 0 8px 8px 0;
+    }
+    .guide-date {
+      margin-top: 22px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div id="particles"></div>
+
+  <nav class="nav-hud">
+    <div class="nav-container">
+      <a href="index.html" class="brand-group" aria-label="Gexel, inicio">
+        <img class="brand-logo" src="logo.svg" alt="" width="30" height="30">
+        <div class="brand-title">GEXEL<span>.</span></div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html">Recursos</a></li>
+        <li><a href="guias.html" aria-current="page">Guías</a></li>
+        <li><a href="sobre-mi.html">Sobre mí</a></li>
+        <li><a href="plugins.html">Plugins</a></li>
+        <li class="nav-ext"><a href="https://pexread.gexel.fun" target="_blank" rel="noopener">pexread.gexel.fun</a></li>
+      </ul>
+
+      <div class="nav-badge-status">
+        <span class="status-dot-blink"></span>
+        <span>STUDIO ONLINE</span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <h1 class="page-title">Guías</h1>
+    <p class="page-lede">Los trucos de mis vídeos, paso a paso y sin relleno.</p>
+  </header>
+
+  <main class="guides">
+
+    <!-- Para añadir una guía: copia un <article class="guide"> y ponle un id único (es el enlace: guias.html#id). La más reciente va primero. -->
+
+    <article class="guide" id="fortnite-nube">
+      <p class="guide-tag">Videojuegos · Móvil</p>
+      <h2>Jugar Fortnite en el móvil sin descargarlo</h2>
+      <p>Fortnite se puede jugar gratis desde el navegador del móvil con Xbox Cloud Gaming: el juego corre en un servidor de Microsoft y tu móvil solo recibe el vídeo. No ocupa espacio y no necesitas Game Pass.</p>
+
+      <h3>Qué necesitas</h3>
+      <ul>
+        <li>Una <strong>cuenta de Microsoft gratis</strong> (la misma de Hotmail/Outlook sirve).</li>
+        <li>Tu <strong>cuenta de Epic Games</strong>, para conservar tu progreso y tus skins.</li>
+        <li>Un navegador actualizado: Chrome o Edge en Android, Safari en iPhone.</li>
+        <li>Buena conexión: Wi-Fi de 5 GHz cerca del router o, mejor aún, un <strong>adaptador USB-C a Ethernet</strong> con cable.</li>
+      </ul>
+
+      <h3>Paso a paso</h3>
+      <ol>
+        <li>Abre <a href="https://www.xbox.com/play" target="_blank" rel="noopener">xbox.com/play</a> en el navegador del móvil.</li>
+        <li>Inicia sesión con tu cuenta de Microsoft.</li>
+        <li>Busca <strong>Fortnite</strong> y pulsa <strong>Jugar</strong>.</li>
+        <li>Vincula tu cuenta de Epic Games cuando te lo pida.</li>
+        <li>Truco: en el menú del navegador elige <strong>"Añadir a pantalla de inicio"</strong> para jugar a pantalla completa, como si fuera una app.</li>
+      </ol>
+
+      <h3>Ten en cuenta</h3>
+      <ul>
+        <li>Sin Game Pass las sesiones son limitadas (suelen ser de hasta 1 hora) y en horas punta puede haber cola.</li>
+        <li>Puedes jugar con controles táctiles o conectar un mando por Bluetooth.</li>
+        <li>Xbox Cloud Gaming no está en todos los países. Si en tu país no te deja jugar, escríbeme por privado en Instagram y te cuento cómo lo hago yo.</li>
+      </ul>
+
+      <h3>Sobre el token pirata</h3>
+      <p>El token de la Tienda Pirata sale en los cofres del evento Treasure Hunters (hasta el 5 de diciembre de 2026) con una probabilidad de <strong>1 entre 137.500 cofres</strong>. Más partidas significan más cofres abiertos, pero nadie te garantiza que te toque.</p>
+      <p class="note"><strong>Ojo con las estafas:</strong> nadie puede regalarte ni venderte el token. Las webs que lo "regalan" y las cuentas que se venden con él son estafas. Nunca des tu correo y contraseña de Epic a nadie.</p>
+
+      <p class="guide-date">Actualizada: 18 de noviembre de 2026</p>
+    </article>
+
+  </main>
+
+  <footer>
+    &copy; 2026 Gexel Technologies &mdash; Creado por <a href="https://github.com/gegecam30" target="_blank" rel="noopener">gegecam30</a> &amp; <a href="https://github.com/TUXERO1986" target="_blank" rel="noopener">TUXERO1986</a> &mdash; All Rights Reserved
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
