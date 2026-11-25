@@ -133,6 +133,35 @@
 
     <!-- Para añadir una guía: copia un <article class="guide"> y ponle un id único (es el enlace: guias.html#id). La más reciente va primero. -->
 
+    <article class="guide" id="ajedrez-bots">
+      <p class="guide-tag">Ajedrez · ¿Cómo funciona? #2</p>
+      <h2>Cómo piensa un bot de ajedrez (y dónde jugar contra uno gratis)</h2>
+      <p>Un bot no se sabe todas las partidas: combina un libro de aperturas, cálculo y tablas de finales.</p>
+
+      <h3>Cómo piensa</h3>
+      <ol>
+        <li><strong>Libro de aperturas:</strong> en las primeras jugadas consulta una base de aperturas conocidas.</li>
+        <li><strong>Cálculo:</strong> imagina las jugadas posibles, las respuestas y varios turnos más, valora cada posición y descarta las ramas malas (búsqueda alfa-beta). Stockfish, el motor libre más fuerte, valora las posiciones con una pequeña red neuronal (NNUE).</li>
+        <li><strong>Tablas de finales:</strong> con 7 piezas o menos en el tablero consulta la respuesta perfecta ya calculada.</li>
+      </ol>
+
+      <h3>Dos momentos clave</h3>
+      <ul>
+        <li><strong>1997:</strong> Deep Blue (IBM) le ganó a Kasparov 3½–2½ revisando unos 200 millones de posiciones por segundo.</li>
+        <li><strong>2017:</strong> AlphaZero (DeepMind) aprendió solo con las reglas, jugando contra sí mismo; en unas 4 horas de entrenamiento ya superaba a Stockfish y luego le ganó un match de 100 partidas sin perder ninguna.</li>
+      </ul>
+
+      <h3>Juega o analiza gratis</h3>
+      <ul>
+        <li><a href="https://lichess.org/setup/ai" target="_blank" rel="noopener">Jugar contra el ordenador en Lichess</a> (lichess.org/setup/ai)</li>
+        <li><a href="https://lichess.org/analysis" target="_blank" rel="noopener">Analizar tu partida con Stockfish</a> (lichess.org/analysis)</li>
+      </ul>
+
+      <p>Fuentes: <a href="https://www.ibm.com/history/deep-blue" target="_blank" rel="noopener">IBM Deep Blue</a> · <a href="https://deepmind.google/research/breakthroughs/alphazero/" target="_blank" rel="noopener">DeepMind AlphaZero</a>.</p>
+
+      <p class="guide-date">Actualizada: 25 de noviembre de 2026</p>
+    </article>
+
     <article class="guide" id="ajedrez-partida-unica">
       <p class="guide-tag">Ajedrez · ¿Cómo funciona?</p>
       <h2>Cómo saber si tu partida de ajedrez ya se jugó antes</h2>
